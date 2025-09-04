@@ -31,8 +31,7 @@ nslookup $DOMAIN
 nslookup test.$DOMAIN
 
 # change the email address in the manifest `cluster-issuer.yaml` to your email address
-EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
-sed -i "s/your-email@example.com/$EMAIL/g" /training/platform-cluster/cluster-issuer.yaml
+sed -i "s/your-email@example.com/$TRAINEE_EMAIL/g" /training/platform-cluster/cluster-issuer.yaml
 
 # apply the cluster-issuer to your cluster
 kubectl apply -f /training/platform-cluster/cluster-issuer.yaml

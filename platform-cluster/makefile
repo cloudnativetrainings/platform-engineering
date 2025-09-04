@@ -1,4 +1,3 @@
-
 .PHONY: prepare-tf-config
 prepare-tf-config:
 	cp /training/kubeone_${K1_VERSION}_linux_amd64/examples/terraform/gce/*.tf /training/platform-cluster/tf_infra/
@@ -12,7 +11,7 @@ terraform: prepare-tf-config
 	
 .PHONY: create-cluster
 create-cluster: terraform
-	cd /training/platform-cluster; kubeone apply -t /training/platform-cluster/tf_infra -y --verbose
+	cd /training/platform-cluster; kubeone apply -t /training/platform-cluster/tf_infra -y
 	terraform -chdir=/training/platform-cluster/tf_infra apply -auto-approve
 	cd /training/platform-cluster; kubeone config machinedeployments -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra > /training/platform-cluster/md.yaml
 	sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/platform-cluster/md.yaml
