@@ -4,6 +4,19 @@ In this lab you will ensure everything is in place.
 
 ## Copy your Training Files
 
+<!-- TODO
+
+.trainingrc alredy looks like this
+PS1="\[[0;32m\]\u@\H \[[0;34m\]\w >[0m "
+cd /training/
+source <(kubectl completion bash)
+export K8S_VERSION=1.32.4
+export TF_VERSION=1.12.2-1
+source /root/kubectx.bash
+source /root/kubens.bash
+source <(helm completion bash)
+ -->
+
 ```bash
 # create a directory for holding sensitive information
 mkdir /training/.secrets
@@ -20,6 +33,12 @@ source /root/.trainingrc
 ```
 
 ## Prepare your environment
+
+<!-- TODO google credentials file does not work
+
+export GOOGLE_CREDENTIALS=''
+
+ -->
 
 ```bash
 # create a ssh key pair

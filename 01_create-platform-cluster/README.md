@@ -1,12 +1,20 @@
 
 ```bash
+# TODO source has to be done, otherwise vars are not set
+
+# TODO introduce skiphelmreleases in k1 PR
+
 # create the cluster
 make -C /training/platform-cluster/ create-cluster
 
 # ensure the downloaded kubeconfig is the default kubeconfig
 mkdir /root/.kube
 cp /training/platform-cluster/$TRAINEE_NAME-platform-cluster-kubeconfig /root/.kube/config
+```
 
+<!-- TODO uncomment helmreleases -->
+
+```bash
 
 
 ### Create proper DNS entry for the ingress controller

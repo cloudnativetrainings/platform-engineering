@@ -12,6 +12,7 @@ terraform: prepare-tf-config
 .PHONY: create-cluster
 create-cluster: terraform
 	cd /training/platform-cluster; kubeone apply -t /training/platform-cluster/tf_infra -y
+	mkdir /root/.kube/; cp /training/platform-cluster/hubert-platform-cluster-kubeconfig /root/.kube/config
 	terraform -chdir=/training/platform-cluster/tf_infra apply -auto-approve
 	cd /training/platform-cluster; kubeone config machinedeployments -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra > /training/platform-cluster/md.yaml
 	sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/platform-cluster/md.yaml
