@@ -1,0 +1,35 @@
+# dex.values.yaml
+config:
+  issuer: https://login.hubert.pe.poc.cloud-native.training
+  storage:
+    type: kubernetes
+    config:
+      inCluster: true
+  staticClients:
+    - id: kdp-kubelogin
+      name: kdp-kubelogin
+      secret: K3qDpaX1PUTgKT79VBGlF3ecbCDgBWKQ
+      RedirectURIs:
+        - http://localhost:8000
+        - http://localhost:18000
+        - https://dashboard.hubert.pe.poc.cloud-native.training/api/auth/callback/oidc
+  enablePasswordDB: true
+  staticPasswords:
+    - email: admin
+      hash: "$2y$10$eyOErZue7L2LYOvtmbbm4Ol.wa1dO30yv3/vCtl0V..oF/Af.7mYG"
+      username: admin
+      userID: 08a8684b-db88-4b73-90a9-3cd1661f5466
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  className: nginx
+  hosts:
+    - host: login.hubert.pe.poc.cloud-native.training
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: dex-tls
+      hosts:
+        - login.hubert.pe.poc.cloud-native.training

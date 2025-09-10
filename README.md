@@ -2,8 +2,6 @@
 
 In this training you will learn how to do Platform Engineering.
 
-Please start with
-
 ## Setup the training environment
 
 1. Open [Github Codespaces](https://github.com/codespaces) and create your new `cloudnativetrainings/platform-engineering` codespace.

@@ -10,7 +10,6 @@ kubeone reset -m /training/platform-cluster/kubeone.yaml -t /training/platform-c
 terraform -chdir=/training/platform-cluster/tf_infra/ destroy -auto-approve
 
 # delete the gce DNS entries
-gcloud dns record-sets delete *.kubermatic.$DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 gcloud dns record-sets delete *.$DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 gcloud dns record-sets delete $DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 

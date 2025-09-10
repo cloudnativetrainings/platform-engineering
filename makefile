@@ -10,6 +10,7 @@ verify:
 	terraform version
 	kubectx
 	helm version
+	helmfile ---verify
 	test -n "$(GCE_PROJECT)"
 	test -n "$(TRAINEE_NAME)"
 	test -n "$(TRAINEE_EMAIL)"

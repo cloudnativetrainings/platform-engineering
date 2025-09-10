@@ -1,18 +1,25 @@
 
 ```bash
-# TODO source has to be done, otherwise vars are not set
-
-# TODO introduce skiphelmreleases in k1 PR
-
 # create the cluster
 make -C /training/platform-cluster/ create-cluster
 
-# ensure the downloaded kubeconfig is the default kubeconfig
-mkdir /root/.kube
-cp /training/platform-cluster/$TRAINEE_NAME-platform-cluster-kubeconfig /root/.kube/config
-```
 
-<!-- TODO uncomment helmreleases -->
+# TODO
+
+# sudo curl -LO  https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+#   && sudo tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+#   && sudo install -o root -g root -m 0755 linux-amd64/helm /usr/local/bin/helm \
+#   && sudo rm helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+#   && sudo rm -rf linux-amd64/ \
+#   && echo 'source <(helm completion bash)' | sudo tee -a /root/.trainingrc
+
+# rm -rf /root/.local/share/helm/plugins/helm-diff/
+# helm plugin install https://github.com/databus23/helm-diff
+
+
+# install kdp
+make -C /training/platform-cluster/ install-kdp
+```
 
 ```bash
 
@@ -30,20 +37,12 @@ echo $INGRESS_IP
 
 # create wildcard DNS entry
 gcloud dns record-sets transaction start --zone $DNS_ZONE_NAME
-gcloud dns record-sets transaction add --zone $DNS_ZONE_NAME --ttl 60 --name="platform.$DOMAIN." --type A $INGRESS_IP
-gcloud dns record-sets transaction add --zone $DNS_ZONE_NAME --ttl 60 --name="*.platform.$DOMAIN." --type A $INGRESS_IP
+gcloud dns record-sets transaction add --zone $DNS_ZONE_NAME --ttl 60 --name="$DOMAIN." --type A $INGRESS_IP
+gcloud dns record-sets transaction add --zone $DNS_ZONE_NAME --ttl 60 --name="*.$DOMAIN." --type A $INGRESS_IP
 gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME
 
 # verify via nslookup
 nslookup $DOMAIN
 nslookup test.$DOMAIN
 
-# change the email address in the manifest `cluster-issuer.yaml` to your email address
-sed -i "s/your-email@example.com/$TRAINEE_EMAIL/g" /training/platform-cluster/cluster-issuer.yaml
-
-# apply the cluster-issuer to your cluster
-kubectl apply -f /training/platform-cluster/cluster-issuer.yaml
-
-# verify certs
-# kubectl get certs
 ```

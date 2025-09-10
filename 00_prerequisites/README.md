@@ -47,6 +47,9 @@ make -C /training/00_prerequisites/ ssh
 # ensure gce configuration properly setup
 make -C /training/00_prerequisites/ gce
 
+# TODO
+echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc
+
 # install k1
 make -C /training/00_prerequisites/ install-k1
 ```
