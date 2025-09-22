@@ -10,12 +10,12 @@ kdp:
     }
 
   frontProxy:
-    internalDomain: internal.hubert.pe.poc.cloud-native.training
-    publicDomain: api.hubert.pe.poc.cloud-native.training
-    url: https://internal.hubert.pe.poc.cloud-native.training:8443
+    internalDomain: internal.<DOMAIN>
+    publicDomain: api.<DOMAIN>
+    url: https://internal.<DOMAIN>:8443
 
   virtualWorkspaces:
-    shardExternalURL: https://internal.hubert.pe.poc.cloud-native.training:8443
+    shardExternalURL: https://internal.<DOMAIN>:8443
 
   hooks:
     bootstrap:

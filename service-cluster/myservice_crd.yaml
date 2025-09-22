@@ -1,0 +1,27 @@
+# helloworld-crd.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: myservices.myorg.com
+spec:
+  group: myorg.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                message:
+                  type: string
+  scope: Namespaced
+  names:
+    plural: myservices
+    singular: myservice
+    kind: MyService
+    shortNames:
+      - ms

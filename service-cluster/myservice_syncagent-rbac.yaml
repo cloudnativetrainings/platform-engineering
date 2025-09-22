@@ -1,0 +1,31 @@
+# needed for syncagent to read crs in service cluster
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "myservice-syncagent:kdp-system:publish-myservices"
+rules:
+  - apiGroups:
+      - myorg.com
+    resources:
+      - myservices
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: "myservice-syncagent:kdp-system:publish-myservices"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "myservice-syncagent:kdp-system:publish-myservices"
+subjects:
+  - kind: ServiceAccount
+    name: "myservice-syncagent"
+    namespace: kdp-system

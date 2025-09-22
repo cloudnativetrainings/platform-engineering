@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 .PHONY: ssh
 ssh:
 	ssh-keygen -q -N "" -t rsa -f /training/.secrets/gce -C root

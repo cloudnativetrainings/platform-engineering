@@ -1,3 +1,5 @@
+SHELL = /bin/bash
+
 .PHONY verify:
 verify:
 	test -f /root/.trainingrc
@@ -10,7 +12,7 @@ verify:
 	terraform version
 	kubectx
 	helm version
-	helmfile ---verify
+	helmfile version
 	test -n "$(GCE_PROJECT)"
 	test -n "$(TRAINEE_NAME)"
 	test -n "$(TRAINEE_EMAIL)"

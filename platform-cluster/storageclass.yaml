@@ -6,6 +6,7 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: kubernetes.io/gce-pd
 reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
 parameters:
   type: pd-standard
   replication-type: none

@@ -1,4 +1,3 @@
-# kcp.values.yaml
 externalHostname: "internal.<DOMAIN>"
 externalPort: "8443"
 

@@ -1,0 +1,12 @@
+apiVersion: syncagent.kcp.io/v1alpha1
+kind: PublishedResource
+metadata:
+  name: myservice
+spec:
+  resource:
+    kind: MyService
+    apiGroup: myorg.com
+    versions: [v1]
+  naming:
+    namespace: "{{ .ClusterName }}"
+    name: "{{ .Object.metadata.namespace | sha3short }}-{{ .Object.metadata.name | sha3short }}"
