@@ -1,4 +1,12 @@
 
+## reactivate service in ui
+
+```bash
+kubectl delete apiresourceschemas.apis.kcp.io --all
+kubectl delete apiexport --all
+kubectl delete apiexportendpointslices.apis.kcp.io --all
+```
+
 ## oidc plugin
 
 ```bash

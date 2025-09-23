@@ -2,6 +2,9 @@
 # Create Service Cluster
 
 ```bash
+
+TODO allow codespace to create kind clusters like in the other trainings...
+
 # start cluster
 docker-desktop
 kind delete cluster --name service-cluster
