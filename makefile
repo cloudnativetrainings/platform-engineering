@@ -30,4 +30,9 @@ verify:
 	test -n "$(K1_VERSION)"
 	kubeone version
 	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
+	test -n "$(KREW_VERSION)"
+	kubectl oidc-login --version
+	kubectl kcp --version
+	kubectl ws --version
+	kubectl create-workspace --version
 	echo "Training Environment successfully verified"

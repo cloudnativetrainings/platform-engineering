@@ -51,7 +51,7 @@ make -C /training/00_prerequisites/ gce
 echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc
 
 # install k1
-make -C /training/00_prerequisites/ install-k1
+# make -C /training/00_prerequisites/ install-k1
 ```
 
 ## Verify your environment
