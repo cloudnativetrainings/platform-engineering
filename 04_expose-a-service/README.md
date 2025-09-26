@@ -3,6 +3,8 @@
 
 ## Create the Service in the Platform
 
+<!-- TODO domain env var - do i need 2? -->
+
 ```bash
 # create org named "myorg" in ui
 
@@ -13,76 +15,134 @@
 # api-syncagent-kubeconfig namespace named "default"
 
 # activate service named "myservice" in ui
+# download the kubeconfig of the service
+# drag and drop the kubeconfig into the folder `/training/.secrets/` in your codespace
+
+# merge the kubeconfigs into one
+
+# TODO this breaks the naming of the contexts in kubeconfig file
+KUBECONFIG=/training/.secrets/kubeconfig-platform-cluster.yaml:/training/.secrets/kubeconfig-service-cluster.yaml:/training/.secrets/myorg.com-kubeconfig kubectl config view --raw > /training/.secrets/kubeconfig.yaml
+
+# rename the kubeconfig contexts
+kubectl config rename-context kcp kcp-myservice-myorg-com
+
+# switch to kcp-myservice-myorg-com cluster
+kubectx kcp-myservice-myorg-com
+
+# verify your kcp kubeconfig
+# ! on the kcp-myservice-myorg-com cluster
+kubectl ws .
 
 # check if the apiexport has been created
-# download the syncagent kubeconfig ./secrets/kubeconfig-kcp-myorg-com-myservice.yaml
-kubectl --kubeconfig=./.secrets/kubeconfig-kcp-myorg-com-myservice.yaml get apiexport
+# ! on the kcp-myservice-myorg-com cluster
+kubectl get apiexport
 ```
+
+<!-- TODO on running syncagent 0.4.0
+
+{"level":"fatal","time":"2025-09-26T12:13:05.531Z","caller":"api-syncagent/main.go:82","msg":"Sync Agent has encountered an error","error":"failed to resolve APIExport/EndpointSlice: failed to resolve APIExportEndpointSlice: failed to get APIExportEndpointSlice \"myorg.com\": apiexportendpointslices.apis.kcp.io \"myorg.com\" is forbidden: User \"kdp:servlet-myorg.com@ezgo3l72yr6rwoht\" cannot get resource \"apiexportendpointslices\" in API group \"apis.kcp.io\" at the cluster scope: access denied"}
+ -->
 
 ## Create the Service in the Service Cluster
 
 ```bash
 
-# add syncagent
+# switch to service cluster
+kubectx service-cluster
 
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml create namespace kdp-system
+# add syncagent
+# ! on the service cluster
+kubectl create namespace kdp-system
 
 # create the kubeconfig secret
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml \
-  create secret generic kubeconfig-kcp-myorg-com-myservice \
+# ! on the service cluster
+kubectl create secret generic kubeconfig-kcp-myorg-com-myservice \
   --namespace kdp-system \
-  --from-file kubeconfig=./.secrets/kubeconfig-kcp-myorg-com-myservice.yaml
+  --from-file kubeconfig=/training/.secrets/myorg.com-kubeconfig
 
 # create the syncagent
-helm --kubeconfig=/Users/hubert/git/cloudnativetrainings_platform-engineering/.secrets/kubeconfig-service-cluster.yaml -n kdp-system uninstall myservice-syncagent
-helmfile --kubeconfig=/Users/hubert/git/cloudnativetrainings_platform-engineering/.secrets/kubeconfig-service-cluster.yaml sync -f ./service-cluster/myservice_syncagent-helmfile.yaml  --selector id=myservice-syncagent
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml -n kdp-system get pods
+# ! on the service cluster
+# helm -n kdp-system uninstall myservice-syncagent
+helmfile sync -f /training/service-cluster/myservice/myservice/myservice_syncagent-helmfile.yaml  --selector id=myservice-syncagent
+kubectl -n kdp-system get pods
 
 # allow syncagent to read the crs
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml apply -f ./service-cluster/myservice_syncagent-rbac.yaml
+# ! on the service cluster
+kubectl apply -f /training/service-cluster/myservice/myservice_syncagent-rbac.yaml
 
 # verify
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml auth can-i get myservice --as=system:serviceaccount:kdp-system:myservice-syncagent
+# ! on the service cluster
+kubectl auth can-i get myservice --as=system:serviceaccount:kdp-system:myservice-syncagent
 
 # publish resource
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml apply -f ./service-cluster/myservice_published-resource.yaml
+# ! on the service cluster
+kubectl apply -f /training/service-cluster/myservice/myservice_published-resource.yaml
 
 # check the logs of the syncagent
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml -n kdp-system logs -f -l app.kubernetes.io/name=kcp-api-syncagent
+# ! on the service cluster
+kubectl -n kdp-system logs -f -l app.kubernetes.io/name=kcp-api-syncagent
 
 # may restart syncagents
-kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml -n kdp-system delete pods --all
+# ! on the service cluster
+kubectl -n kdp-system delete pods --all
 ```
 
 ## Fix ApiResourceSchema label issue
 
 ```bash
-# download kcp admin kubeconfig named "./.secrets/kubeconfig-kcp-admin.yaml"
 
-kubectl --kubeconfig=./.secrets/kubeconfig-kcp-admin.yaml get workspaces
-export KUBECONFIG=./.secrets/kubeconfig-kcp-admin.yaml
+# download kcp admin kubeconfig
+# drag and drop the kubeconfig into "/training/.secrets/kubeconfig-kcp-admin.yaml" in your codespace
+
+# merge the kubeconfigs into one
+KUBECONFIG=/training/.secrets/kubeconfig-platform-cluster.yaml:/training/.secrets/kubeconfig-service-cluster.yaml:/training/.secrets/myorg.com-kubeconfig:/training/.secrets/kubeconfig-kcp-admin.yaml kubectl config view --raw > /training/.secrets/kubeconfig.yaml
+
+# switch to kcp-admin cluster
+# TODO name of context
+kubectx root
+
+# TODO place this somewhere else in lab 02 setup platform
+# get the redirect url
+echo https://$CODESPACE_NAME-8000.app.github.dev
+
+# add it to dex redirecturis
+kubectx pla
+helmfile sync --file /training/platform-cluster/helm/helmfile.yaml --selector id=dex
+kubectx root
+# add #TODO '--oidc-redirect-url=https://humble-space-guide-gx66rgjjx7qfvrw6-8000.app.github.dev' to kubeconfig
+
+# ! on the kcp-admin cluster
+kubectl get workspaces
+
+# ! on the kcp-admin cluster
 kubectl ws .
 kubectl ws tree
 kubectl ws myorg
 
 # verify apiexport
+# ! on the kcp-admin cluster
 kubectl get apiexport
 
 # verify apibinding
+# ! on the kcp-admin cluster
 kubectl get apibinding myorg.com -o yaml
 
 # verify apiresourceschema
+# ! on the kcp-admin cluster
 kubectl get apiresourceschema
 
 # label the apiresourceschema
+# ! on the kcp-admin cluster
 kubectl label apiresourceschema v275e6013.myservices.myorg.com syncagent.kcp.io/api-group=myorg.com
 
-# # may restart syncagents
-# kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml -n kdp-system delete pods --all
+# may restart syncagents
+# ! on service cluster
+kubectx service-cluster
+kubectl -n kdp-system delete pods --all
 
-# # check the logs of the syncagent
-# kubectl --kubeconfig=./.secrets/kubeconfig-service-cluster.yaml -n kdp-system logs -f -l app.kubernetes.io/name=kcp-api-syncagent
-
+# # check logs of the syncagent
+# ! on service cluster
+kubectl -n kdp-system logs -f -l app.kubernetes.io/name=kcp-api-syncagent
 ```
 
 ## Create a MyService Object in UI
@@ -93,5 +153,8 @@ kubectl label apiresourceschema v275e6013.myservices.myorg.com syncagent.kcp.io/
 # message ...
 
 # verify CR was created
+# ! on service cluster
 kubectl get myservice
+
+# TODO namespace looks wrong
 ```

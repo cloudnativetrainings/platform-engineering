@@ -12,17 +12,15 @@ echo "export OIDC_CLIENT_SECRET=$OIDC_CLIENT_SECRET" >> /root/.trainingrc
 source /root/.trainingrc
 yq ".config.staticClients[0].secret = \"$OIDC_CLIENT_SECRET\"" -i /training/platform-cluster/helm/values_dex.yaml
 
-# set email
-# TODO email needs some additional rbac, so admin is the way to go ATM
-# yq ".config.staticPasswords[0].email = \"$TRAINEE_EMAIL\"" -i /training/platform-cluster/helm/values_dex.yaml
-
 # set <ADMIN_PASSWORD_HASH>
 PASSWORD=<FILL-IN-YOUR-PASSWORD>
 PASSWORD_HASH=$(echo "$PASSWORD" | htpasswd -inBC 10 admin | cut -d: -f2)
 echo "export PASSWORD=$PASSWORD" >> /root/.trainingrc
 echo "export PASSWORD_HASH='$PASSWORD_HASH'" >> /root/.trainingrc
-source /root/.
+source /root/.trainingrc
 yq ".config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/platform-cluster/helm/values_dex.yaml
+
+# TODO add the redirect uri madness here!!!
 
 # apply dex helm chart
 helmfile sync --file /training/platform-cluster/helm/helmfile.yaml --selector id=dex
@@ -63,6 +61,8 @@ nslookup internal.$DOMAIN
 
 ## Login into Kubermatic Helm Chart Repo
 
+<!-- TODO quay secrets -->
+
 ```bash
 # set <KUBERMATIC_REGISTRY_USERNAME>
 KUBERMATIC_REGISTRY_USERNAME=<FILL-IN-USERNAME>
@@ -78,6 +78,8 @@ source /root/.trainingrc
 # TODO do it in helmfile, problems with oci repos
 helm registry login quay.io -u $KUBERMATIC_REGISTRY_USERNAME -p $KUBERMATIC_REGISTRY_PASSWORD
 ```
+
+<!-- TODO verify pods running on all helm charts -->
 
 ## Install Developer Platform
 

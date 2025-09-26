@@ -15,10 +15,10 @@ make -C /training/01_create-platform-cluster create-cluster
 kubectl apply -f /training/platform-cluster/storageclass.yaml
 
 # install ingess-nginx helm chart
-helmfile sync --file /training/platform-cluster/helm/helm/helmfile.yaml --selector id=ingress-nginx
+helmfile sync --file /training/platform-cluster/helm/helmfile.yaml --selector id=ingress-nginx
 
 # install cert-manager helm chart
-helmfile sync --file /training/platform-cluster/helm/helm/helmfile.yaml --selector id=cert-manager
+helmfile sync --file /training/platform-cluster/helm/helmfile.yaml --selector id=cert-manager
 ```
 
 ## Finish LetsEncrypt setup

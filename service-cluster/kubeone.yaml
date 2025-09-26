@@ -1,0 +1,16 @@
+apiVersion: kubeone.k8c.io/v1beta2
+kind: KubeOneCluster
+versions:
+  kubernetes: "1.32.4"
+cloudProvider:
+  gce: {}
+  external: true
+  cloudConfig: |
+    [global]
+    regional = true
+    multi-zone = true
+    token-url = "nil"
+addons:
+  enable: true
+  addons:
+    - name: cluster-autoscaler

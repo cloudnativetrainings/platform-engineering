@@ -34,5 +34,5 @@ verify:
 	kubectl oidc-login --version
 	kubectl kcp --version
 	kubectl ws --version
-	kubectl create-workspace --version
+# 	kubectl create-workspace --version TODO https://github.com/kcp-dev/krew-index/issues/4
 	echo "Training Environment successfully verified"

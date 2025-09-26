@@ -3,17 +3,19 @@
 In this lab you will destroy all infrastructure you have created.
 
 ```bash
-kind delete cluster --name service-cluster
+# kind delete cluster --name service-cluster
 
 # helm -n kdp-system uninstall dex
 # helm -n kdp-system uninstall kcp
 # helm -n kdp-system uninstall kdp
 # kubectl delete ns kdp-system
 
-# reset the cluster
-kubeone reset -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra/ -y
+# reset the service cluster
+kubeone reset -m /training/service-cluster/kubeone.yaml -t /training/service-cluster/tf_infra/ -y
+terraform -chdir=/training/service-cluster/tf_infra/ destroy -auto-approve
 
-# destroy the infrastructure provided via terraform
+# reset the platform cluster
+kubeone reset -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra/ -y
 terraform -chdir=/training/platform-cluster/tf_infra/ destroy -auto-approve
 
 # delete the gce DNS entries

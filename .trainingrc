@@ -7,3 +7,4 @@ source /root/kubectx.bash
 source /root/kubens.bash
 source <(helm completion bash)
 source <(helmfile completion bash)
+export KUBECONFIG=/training/.secrets/kubeconfig.yaml
