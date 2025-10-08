@@ -1,0 +1,38 @@
+apiVersion: apis.kcp.io/v1alpha1
+kind: APIResourceSchema
+metadata:
+  # TODO do not understand name schema
+  name: myresourceschema.mysharedresources.pe.cloud-native.com
+spec:
+  group: pe.cloud-native.com
+  names:
+    kind: MySharedResource
+    listKind: MySharedResourceList
+    plural: mysharedresources
+    singular: mysharedresource
+  scope: Namespaced
+  versions:
+    - name: v1alpha1
+      schema:
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              intent:
+                type: string
+            type: object
+          status:
+            properties:
+              result:
+                type: string
+            type: object
+        type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
