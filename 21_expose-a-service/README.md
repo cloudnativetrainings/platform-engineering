@@ -1,6 +1,46 @@
 
 # Expose a Service
 
+## Apply CRD
+
+```bash
+# create the crd
+# ! on the service cluster
+kubectl apply -f ./service-cluster/myservice/myservice_crd.yaml
+
+# verify
+# ! on the service cluster
+kubectl get crd myservices.myorg.com
+```
+<!-- 
+## krew
+
+```bash
+# TODO do krew installation in container image
+# TODO after oidc login is doable at github codespaces
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+kubectl krew install oidc-login
+
+kubectl krew list
+PLUGIN                    VERSION
+kcp-dev/create-workspace  v0.28.1
+kcp-dev/kcp               v0.28.1
+kcp-dev/ws                v0.28.1
+krew                      v0.4.5
+oidc-login                v1.34.1
+
+``` -->
+
 ## Create the Service in the Platform
 
 <!-- TODO domain env var - do i need 2? -->
@@ -100,10 +140,6 @@ KUBECONFIG=/training/.secrets/kubeconfig-platform-cluster.yaml:/training/.secret
 # switch to kcp-admin cluster
 # TODO name of context
 kubectx root
-
-# TODO place this somewhere else in lab 02 setup platform
-# get the redirect url
-echo https://$CODESPACE_NAME-8000.app.github.dev
 
 # add it to dex redirecturis
 kubectx pla

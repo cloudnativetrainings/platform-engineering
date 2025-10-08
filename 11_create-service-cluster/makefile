@@ -15,6 +15,10 @@ terraform: prepare-tf-config
 create-cluster: terraform
 	cd /training/service-cluster; kubeone apply -t /training/service-cluster/tf_infra -y
 	cp /training/service-cluster/${TRAINEE_NAME}-service-cluster-kubeconfig /training/.secrets/kubeconfig-service-cluster.yaml
+	yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"kubernetes-admin@service-cluster\")" -i /training/.secrets/kubeconfig-service-cluster.yaml
+	yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"kubernetes-admin@service-cluster\")" -i /training/.secrets/kubeconfig-service-cluster.yaml
+	KUBECONFIG="/training/.secrets/kubeconfig-platform-cluster.yaml:/training/.secrets/kubeconfig-service-cluster.yaml" kubectl config view --raw > /training/.secrets/kubeconfig.yaml
+# 	TODO switch to service-cluster kubeconfig before doing the next steps
 	cd /training/service-cluster; kubeone config machinedeployments -m /training/service-cluster/kubeone.yaml -t /training/service-cluster/tf_infra > /training/service-cluster/md.yaml
 	sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/service-cluster/md.yaml
 	kubectl apply -f /training/service-cluster/md.yaml

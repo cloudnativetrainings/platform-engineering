@@ -2,6 +2,10 @@
 
 In this lab you will ensure everything is in place.
 
+<!-- TODO k1 dir in /training/... does not exist on installing it via dockerfile 
+maybe the problem is that the dir does not exist yet
+-->
+
 ## Copy your Training Files
 
 <!-- TODO in /root/.trainingrc env substitution
@@ -18,7 +22,7 @@ mkdir /training/.secrets
 # drag and drop the provided file named "gcloud-service-account.json" into the folder `/training/.secrets/`
 
 # merge the .trainingrc files
-cat .trainingrc >> /root/.trainingrc 
+cat /training/.secrets/.trainingrc >> /root/.trainingrc 
 rm .trainingrc
 
 # ensure changes are applied in your current bash

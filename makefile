@@ -29,6 +29,6 @@ verify:
 # TODO verify gcp sa permissions
 	test -n "$(K1_VERSION)"
 	kubeone version
-	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
+ 	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
 # 	kubectl create-workspace --version TODO https://github.com/kcp-dev/krew-index/issues/4
 	echo "Training Environment successfully verified"

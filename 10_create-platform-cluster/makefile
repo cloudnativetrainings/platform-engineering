@@ -15,7 +15,9 @@ terraform: prepare-tf-config
 create-cluster: terraform
 	cd /training/platform-cluster; kubeone apply -t /training/platform-cluster/tf_infra -y
 	cp /training/platform-cluster/${TRAINEE_NAME}-platform-cluster-kubeconfig /training/.secrets/kubeconfig-platform-cluster.yaml
-	cp /training/platform-cluster/${TRAINEE_NAME}-platform-cluster-kubeconfig /training/.secrets/kubeconfig.yaml
+	yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"kubernetes-admin@platform-cluster\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
+	yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"kubernetes-admin@platform-cluster\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
+	cp /training/.secrets/kubeconfig-platform-cluster.yaml /training/.secrets/kubeconfig.yaml
 	cd /training/platform-cluster; kubeone config machinedeployments -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra > /training/platform-cluster/md.yaml
 	sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/platform-cluster/md.yaml
 	kubectl apply -f /training/platform-cluster/md.yaml

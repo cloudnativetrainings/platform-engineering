@@ -8,9 +8,17 @@
 make -C /training/01_create-platform-cluster create-cluster
 ```
 
+<!-- TODO kubeconfig /training/.secrets/kubeconfig does it work? -->
+
 ## Install Infra Components on Kuberentes Cluster
 
 ```bash
+
+# rename the kubernetes user for avoiding naming conflicts
+yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"kubernetes-admin@platform-cluster\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
+yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"kubernetes-admin@platform-cluster\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
+
+
 # install storageclass
 kubectl apply -f /training/platform-cluster/storageclass.yaml
 
