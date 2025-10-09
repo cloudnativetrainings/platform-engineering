@@ -29,15 +29,19 @@ kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-admin.yaml config set-con
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-admin.yaml config set-context root --cluster=root --user=kcp-admin
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-admin.yaml config use-context root
 
-# TODO merge the kubeconfigs
+# merge the kubeconfigs
 
+# TODO get certs into kubeconfig
 
-export KUBECONFIG=/training/.secrets/kubeconfig-kcp-admin.yaml
-kubectl  ws .
+yq e ".clusters |= map(select(.name == \"base\").name = \"kcp-base\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+yq e ".clusters |= map(select(.name == \"root\").name = \"kcp-root\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+yq e ".contexts |= map(select(.name == \"base\").context.cluster = \"kcp-base\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+yq e ".contexts |= map(select(.name == \"root\").context.cluster = \"kcp-root\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+yq e ".contexts |= map(select(.name == \"base\").name = \"kcp-base\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+yq e ".contexts |= map(select(.name == \"root\").name = \"kcp-root\")" -i /training/.secrets/kubeconfig-kcp-admin.yaml
+KUBECONFIG="/training/.secrets/kubeconfig-platform-cluster.yaml:/training/.secrets/kubeconfig-service-cluster.yaml:/training/.secrets/kubeconfig-kcp-admin.yaml" kubectl config view --raw > /training/.secrets/kubeconfig.yaml
 
-kubectl ws tree
+# verify
+kubectx
 
-kubectl create-workspace test
-
-kubectl --kubeconfig=/training/.secrets/kubeconfig.yaml get pods
 ```
