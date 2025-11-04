@@ -1,0 +1,7 @@
+apiVersion: myorg.com/v1alpha1
+kind: MySharedResource
+metadata:
+  name: mysharedresource-1
+  namespace: default
+spec:
+  intent: "I want something to happen"

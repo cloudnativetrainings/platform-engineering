@@ -1,0 +1,50 @@
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+  - name: dex
+    url: https://charts.dexidp.io
+  - name: kcp
+    url: https://kcp-dev.github.io/helm-charts
+
+releases:
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    atomic: true
+    createNamespace: true
+    chart: ingress-nginx/ingress-nginx
+    version: 4.12.2
+    labels:
+      id: ingress-nginx
+    values:
+      - ./values_ingress-nginx.yaml
+  - name: cert-manager
+    namespace: cert-manager
+    atomic: true
+    createNamespace: true
+    chart: oci://quay.io/jetstack/charts/cert-manager
+    version: v1.17.4
+    labels:
+      id: cert-manager
+    values:
+      - ./values_cert-manager.yaml
+  - name: dex
+    namespace: dex
+    atomic: true
+    createNamespace: true
+    chart: dex/dex
+    labels:
+      id: dex
+    version: 0.23.0
+    values:
+      - ./values_dex.yaml
+  - name: kcp
+    namespace: kcp-system
+    atomic: true
+    createNamespace: true
+    chart: kcp/kcp
+    labels:
+      id: kcp
+    # TODO did it work old version was 0.11.1
+    version: 0.12.5
+    values:
+      - ./values_kcp.yaml

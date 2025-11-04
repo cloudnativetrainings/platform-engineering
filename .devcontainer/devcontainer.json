@@ -6,6 +6,9 @@
   "customizations": {
     "vscode": {
       "settings": {
+        // TODO disable ai on all trainings
+        "chat.disableAIFeatures": true,
+        "chat.agent.enabled": false,
         "workbench.editorAssociations": {
           "*.md": "vscode.markdown.preview.editor"
         },

@@ -1,0 +1,7 @@
+apiVersion: myorg.com/v1
+kind: MyService
+metadata:
+  name: mymyservice
+  namespace: default
+spec:
+  message: "I want something to happen"

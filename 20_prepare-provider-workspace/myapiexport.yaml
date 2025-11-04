@@ -1,0 +1,11 @@
+apiVersion: apis.kcp.io/v1alpha1
+kind: APIExport
+metadata:
+  name: myapiexport
+spec:
+  # latestResourceSchemas:
+  #   - myresourceschema.mysharedresources.pe.cloud-native.com
+  # permissionClaims:
+  #   - group: ""
+  #     resource: configmaps
+  #     all: true

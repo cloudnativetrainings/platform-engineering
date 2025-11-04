@@ -9,4 +9,5 @@ In this training you will learn how to do Platform Engineering.
 
 ## Teardown the training environment
 
+1. Run [99_teardown](./99_teardown/README.md).
 1. Delete your `cloudnativetrainings/platform-engineering` codespace via [Github Codespaces](https://github.com/codespaces).

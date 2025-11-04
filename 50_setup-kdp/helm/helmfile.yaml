@@ -1,0 +1,21 @@
+releases:
+  - name: developer-platform
+    namespace: kcp-system
+    atomic: true
+    createNamespace: true
+    chart: oci://quay.io/kubermatic/helm-charts/developer-platform
+    labels:
+      id: developer-platform
+    version: 0.9.0
+    values:
+      - ./values_developer-platform.yaml
+  - name: developer-platform-dashboard
+    namespace: kcp-system
+    atomic: true
+    createNamespace: true
+    chart: oci://quay.io/kubermatic/helm-charts/developer-platform-dashboard
+    labels:
+      id: developer-platform-dashboard
+    version: 0.9.0
+    values:
+      - ./values_developer-platform-dashboard.yaml

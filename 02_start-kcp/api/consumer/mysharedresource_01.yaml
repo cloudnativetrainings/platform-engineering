@@ -1,9 +1,0 @@
-apiVersion: pe.cloud-native.com/v1alpha1
-kind: MySharedResource
-metadata:
-  name: first-instance-of-mysharedresource
-  namespace: default
-spec:
-  intent: "I want something to happen"
-status:
-  result: "Nobody cares yet"
