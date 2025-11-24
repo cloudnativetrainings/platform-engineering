@@ -82,7 +82,6 @@ echo https://login.$PLATFORM_DOMAIN
 ## Install KCP
 
 ```bash
-
 # set <DOMAIN>
 sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_setup-kcp-in-platform-cluster/helm/values_kcp.yaml
 

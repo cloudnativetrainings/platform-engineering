@@ -66,17 +66,17 @@ helm registry login quay.io -u $KUBERMATIC_REGISTRY_USERNAME -p $KUBERMATIC_REGI
 
 ```bash
 # set <DOMAIN>
-sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/40_setup-kdp/helm/values_developer-platform.yaml
+sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform.yaml
 
 # set <PULL_CREDENTIALS>
 # TODO
 PULL_CREDENTIALS=<FILL-IN-PULL-CREDENTIALS>
 echo "export PULL_CREDENTIALS=$PULL_CREDENTIALS" >> /root/.trainingrc
 source /root/.trainingrc
-sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/40_setup-kdp/helm/values_developer-platform.yaml
+sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform.yaml
 
 # apply developer-platform helm chart
-helmfile sync --file /training/40_setup-kdp/helm/helmfile.yaml --selector id=developer-platform
+helmfile sync --file /training/50_setup-kdp-in-platform-cluster/helm/helmfile.yaml --selector id=developer-platform
 
 # verify all pods are running
 kubectl -n kcp-system get pods
@@ -86,22 +86,22 @@ kubectl -n kcp-system get pods
 
 ```bash
 # set <DOMAIN>
-sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/40_setup-kdp/helm/values_developer-platform-dashboard.yaml
+sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform-dashboard.yaml
 
 # set <PULL_CREDENTIALS>
-sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/40_setup-kdp/helm/values_developer-platform-dashboard.yaml
+sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform-dashboard.yaml
 
 # set <OIDC_CLIENT_SECRET>
-yq ".dashboard.config.authentication.oidc.clientSecret = \"$OIDC_CLIENT_SECRET\"" -i /training/40_setup-kdp/helm/values_developer-platform-dashboard.yaml
+yq ".dashboard.config.authentication.oidc.clientSecret = \"$OIDC_CLIENT_SECRET\"" -i /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform-dashboard.yaml
 
 # set <SESSION_ENCRYPTION_KEY>
 SESSION_ENCRYPTION_KEY=$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)
 echo "export SESSION_ENCRYPTION_KEY=$SESSION_ENCRYPTION_KEY" >> /root/.trainingrc
 source /root/.trainingrc
-yq ".dashboard.config.authentication.encryptionKey = \"$SESSION_ENCRYPTION_KEY\"" -i /training/40_setup-kdp/helm/values_developer-platform-dashboard.yaml
+yq ".dashboard.config.authentication.encryptionKey = \"$SESSION_ENCRYPTION_KEY\"" -i /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform-dashboard.yaml
 
 # apply developer-platform-dashboard helm chart
-helmfile sync --file /training/40_setup-kdp/helm/helmfile.yaml --selector id=developer-platform-dashboard
+helmfile sync --file /training/50_setup-kdp-in-platform-cluster/helm/helmfile.yaml --selector id=developer-platform-dashboard
 
 # verify all pods are running
 kubectl -n kcp-system get pods

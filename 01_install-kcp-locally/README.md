@@ -10,7 +10,6 @@ In this lab you will install
 ## Install kcp
 
 ```bash
-
 # install kcp
 KCP_VERSION=0.28.3 \
   && curl -fsSLO https://github.com/kcp-dev/kcp/releases/download/v${KCP_VERSION}/kcp_${KCP_VERSION}_linux_amd64.tar.gz \
