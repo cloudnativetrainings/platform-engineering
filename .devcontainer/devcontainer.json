@@ -6,12 +6,21 @@
   "customizations": {
     "vscode": {
       "settings": {
-        // TODO disable ai on all trainings
-        "chat.disableAIFeatures": true,
         "chat.agent.enabled": false,
+        "chat.commandCenter.enabled": false,
+        "chat.disableAIFeatures": true,
+        "telemetry.feedback.enabled": false,
+        "telemetry.telemetryLevel": "off",
         "workbench.editorAssociations": {
           "*.md": "vscode.markdown.preview.editor"
         },
+        "workbench.settings.applyToAllProfiles": [
+          "chat.agent.enabled",
+          "chat.commandCenter.enabled",
+          "chat.disableAIFeatures",
+          "telemetry.feedback.enabled",
+          "telemetry.telemetryLevel"
+        ],
         "terminal.integrated.shell.linux": "/bin/bash",
         "files.exclude": {
           ".git/": true,
