@@ -10,11 +10,11 @@ kubectl create-workspace provider --enter
 kubectl ws tree
 
 # create the apiresourceschema
-kubectl apply -f /training/04_sharing-resources/api/provider/myapiresourceschema.yaml
+kubectl apply -f /training/04_sharing-apis/api/provider/myapiresourceschema.yaml
 kubectl get apiresourceschema
 
 # create the apiexport
-kubectl apply -f /training/04_sharing-resources/api/provider/myapiexport.yaml
+kubectl apply -f /training/04_sharing-apis/api/provider/myapiexport.yaml
 kubectl get apiexport
 ```
 
@@ -40,7 +40,7 @@ kubectl get crds
 kubectl api-resources | grep MySharedResource
 
 # apply your first instance of MySharedResource
-kubectl apply -f /training/04_sharing-resources/api/consumer/mysharedresource.yaml
+kubectl apply -f /training/04_sharing-apis/api/consumer/mysharedresource.yaml
 
 # verify your first instance of your shared resource got created
 kubectl get mysharedresources

@@ -17,7 +17,7 @@ create-cluster: terraform
 	cp /training/provider-cluster/${TRAINEE_NAME}-provider-cluster-kubeconfig /training/.secrets/kubeconfig-provider-cluster.yaml
 	yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"admin@k8s-provider\")" -i /training/.secrets/kubeconfig-provider-cluster.yaml
 	yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"admin@k8s-provider\")" -i /training/.secrets/kubeconfig-provider-cluster.yaml
-	yq e ".contexts |= map(select(.name == \"kubernetes-admin@hubert-provider-cluster\").name = \"admin@k8s-provider\")" -i /training/.secrets/kubeconfig-provider-cluster.yaml
+	yq ".contexts[0].name = \"admin@k8s-provider\"" -i /training/.secrets/kubeconfig-provider-cluster.yaml	
 	yq ".current-context = \"admin@k8s-provider\"" -i /training/.secrets/kubeconfig-provider-cluster.yaml
 	make -C /training squash-kubeconfigs
 	kubectx admin@k8s-provider

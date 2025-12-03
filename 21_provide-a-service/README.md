@@ -27,8 +27,7 @@ kubectl create secret generic kubeconfig-kcp-provider \
 # verify
 kubectl get secrets kubeconfig-kcp-provider -o jsonpath="{.data.kubeconfig}" | base64 -d
 
-# install syncagent
-# TODO yaml looks weired
+# release the syncagent helm chart
 helmfile sync -f /training/21_provide-a-service/myservice_syncagent-helmfile.yaml --selector id=myservice-syncagent
 
 # verify logs of syncagent pods
@@ -54,4 +53,8 @@ kubectl logs -f -l app.kubernetes.io/instance=myservice-syncagent
 
 # for sure there is no instance of myservice, yet
 kubectl get myservices.myorg.com -A
+
+# verify if syncagents created the apiresourceschema in the provider workspace
+kubectx provider@kcp
+kubectl get apiresourceschema
 ```

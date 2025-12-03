@@ -44,9 +44,6 @@ helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.ya
 
 ## Login into Kubermatic Helm Chart Repo
 
-<!-- TODO quay secrets -->
-<!-- https://quay.io/repository/kubermatic/developer-platform -->
-
 ```bash
 # set <KUBERMATIC_REGISTRY_USERNAME>
 KUBERMATIC_REGISTRY_USERNAME=<FILL-IN-USERNAME>
@@ -69,13 +66,12 @@ helm registry login quay.io -u $KUBERMATIC_REGISTRY_USERNAME -p $KUBERMATIC_REGI
 sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform.yaml
 
 # set <PULL_CREDENTIALS>
-# TODO
 PULL_CREDENTIALS=<FILL-IN-PULL-CREDENTIALS>
 echo "export PULL_CREDENTIALS=$PULL_CREDENTIALS" >> /root/.trainingrc
 source /root/.trainingrc
 sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform.yaml
 
-# apply developer-platform helm chart
+# release the developer-platform helm chart
 helmfile sync --file /training/50_setup-kdp-in-platform-cluster/helm/helmfile.yaml --selector id=developer-platform
 
 # verify all pods are running
@@ -100,7 +96,7 @@ echo "export SESSION_ENCRYPTION_KEY=$SESSION_ENCRYPTION_KEY" >> /root/.trainingr
 source /root/.trainingrc
 yq ".dashboard.config.authentication.encryptionKey = \"$SESSION_ENCRYPTION_KEY\"" -i /training/50_setup-kdp-in-platform-cluster/helm/values_developer-platform-dashboard.yaml
 
-# apply developer-platform-dashboard helm chart
+# release the developer-platform-dashboard helm chart
 helmfile sync --file /training/50_setup-kdp-in-platform-cluster/helm/helmfile.yaml --selector id=developer-platform-dashboard
 
 # verify all pods are running

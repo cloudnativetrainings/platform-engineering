@@ -47,9 +47,6 @@ kubectx root@kcp
 # switch to the workspace of the provider
 kubectl ws :root:provider
 
-# delete the apibinding
-kubectl delete apibinding myapiexport
-
 # delete the apiexport
 kubectl delete apiexport myapiexport
 

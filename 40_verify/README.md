@@ -11,7 +11,3 @@ kubectx admin@k8s-provider
 # verify the instance exists
 kubectl get myservices.myorg.com -A
 ```
-
-<!-- TODO PS1 is not working -->
-<!-- TODO hint to apiresourceschema got created and bound into apiexport -->
-<!-- TODO hint to apiendpointslice -->

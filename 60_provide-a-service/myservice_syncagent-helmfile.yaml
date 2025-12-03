@@ -5,12 +5,9 @@ repositories:
 releases:
   - name: myservice-syncagent
     namespace: default
-    # namespace: kdp-system
     atomic: true
     createNamespace: true
     chart: kcp/api-syncagent
-    # TODO does it work with the new version?
-    # version: 0.3.1
     version: 0.3.1
     labels:
       id: myservice-syncagent
@@ -20,4 +17,3 @@ releases:
         apiExportName: myorg.com
         agentName: myservice-syncagent
         kcpKubeconfig: kubeconfig-kcp-provider
-        # publishedResourceSelector: "training-name=kubeone-training"

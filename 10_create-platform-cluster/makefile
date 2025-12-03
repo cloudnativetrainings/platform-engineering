@@ -17,7 +17,7 @@ create-cluster: terraform
 	cp /training/platform-cluster/${TRAINEE_NAME}-platform-cluster-kubeconfig /training/.secrets/kubeconfig-platform-cluster.yaml
 	yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"admin@k8s-platform\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
 	yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"admin@k8s-platform\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml
-	yq e ".contexts |= map(select(.name == \"kubernetes-admin@hubert-platform-cluster\").name = \"admin@k8s-platform\")" -i /training/.secrets/kubeconfig-platform-cluster.yaml	
+	yq ".contexts[0].name = \"admin@k8s-platform\"" -i /training/.secrets/kubeconfig-platform-cluster.yaml	
 	yq ".current-context = \"admin@k8s-platform\"" -i /training/.secrets/kubeconfig-platform-cluster.yaml
 	make -C /training squash-kubeconfigs
 	cd /training/platform-cluster; kubeone config machinedeployments -m /training/platform-cluster/kubeone.yaml -t /training/platform-cluster/tf_infra > /training/platform-cluster/md.yaml

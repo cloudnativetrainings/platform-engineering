@@ -44,7 +44,6 @@ kubectl krew list
 
 ```bash
 # install krew plugins
-# TODO pin down versions
 kubectl krew index add kcp-dev https://github.com/kcp-dev/krew-index.git
 kubectl krew install kcp-dev/kcp
 kubectl krew install kcp-dev/ws

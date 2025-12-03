@@ -13,10 +13,10 @@ kubectx admin@k8s-platform
 # install storageclass
 kubectl apply -f /training/platform-cluster/storageclass.yaml
 
-# install ingess-nginx helm chart
+# release the ingess-nginx helm chart
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=ingress-nginx
 
-# install cert-manager helm chart
+# release the cert-manager helm chart
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=cert-manager
 ```
 
@@ -69,7 +69,7 @@ echo "export PASSWORD_HASH='$PASSWORD_HASH'" >> /root/.trainingrc
 source /root/.trainingrc
 yq ".config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
 
-# install dex helm chart
+# release the dex helm chart
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=dex
 
 # wait until dex certificate gets valid
@@ -85,7 +85,7 @@ echo https://login.$PLATFORM_DOMAIN
 # set <DOMAIN>
 sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_setup-kcp-in-platform-cluster/helm/values_kcp.yaml
 
-# apply kcp helm chart
+# release the kcp helm chart
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=kcp
 
 # persist the IP address of the kcp-front-proxy loadbalancer
