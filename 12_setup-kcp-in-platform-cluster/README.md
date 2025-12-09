@@ -62,7 +62,7 @@ source /root/.trainingrc
 yq ".config.staticClients[0].secret = \"$OIDC_CLIENT_SECRET\"" -i /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
 
 # set <ADMIN_PASSWORD_HASH>
-PASSWORD=<FILL-IN-YOUR-PASSWORD>
+PASSWORD="<FILL-IN-YOUR-PASSWORD>"
 PASSWORD_HASH=$(echo "$PASSWORD" | htpasswd -inBC 10 admin | cut -d: -f2)
 echo "export PASSWORD=$PASSWORD" >> /root/.trainingrc
 echo "export PASSWORD_HASH='$PASSWORD_HASH'" >> /root/.trainingrc
