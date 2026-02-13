@@ -20,3 +20,9 @@ kubectl create clusterrolebinding provider:admin \
 <!-- TODO PS1 is not working -->
 <!-- TODO hint to apiresourceschema got created and bound into apiexport -->
 <!-- TODO hint to apiendpointslice -->
+
+# after recview
+
+add kro
+quay passwords
+version upgrades?

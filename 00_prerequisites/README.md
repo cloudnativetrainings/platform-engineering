@@ -8,7 +8,7 @@ In this lab you will ensure everything is in place for the later labs.
 # create a directory for holding sensitive information
 mkdir /training/.secrets
 
-# drag and drop the provided file named "gcloud-service-account.json" into the folder `/training/.secrets/`
+# drag and drop the provided files named "gcloud-service-account.json" and ".trainingrc" into the folder `/training/.secrets/`
 
 # merge the .trainingrc files
 cat /training/.secrets/.trainingrc >> /root/.trainingrc 
