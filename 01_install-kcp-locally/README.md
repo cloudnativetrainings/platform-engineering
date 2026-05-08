@@ -11,7 +11,7 @@ In this lab you will install
 
 ```bash
 # install kcp
-KCP_VERSION=0.28.3 \
+KCP_VERSION=0.31.1 \
   && curl -fsSLO https://github.com/kcp-dev/kcp/releases/download/v${KCP_VERSION}/kcp_${KCP_VERSION}_linux_amd64.tar.gz \
   && mkdir -p /training/kcp_${KCP_VERSION}_linux_amd64 \
   && tar zxvf /training/kcp_${KCP_VERSION}_linux_amd64.tar.gz -C /training/kcp_${KCP_VERSION}_linux_amd64 \
@@ -26,7 +26,7 @@ kcp --version
 
 ```bash
 # install krew
-KREW_VERSION=0.4.5 \
+KREW_VERSION=0.5.0 \
   && curl -fsSLO https://github.com/kubernetes-sigs/krew/releases/download/v${KREW_VERSION}/krew-linux_amd64.tar.gz \
   && mkdir -p /training/krew-linux_amd64 \
   && tar zxvf /training/krew-linux_amd64.tar.gz -C /training/krew-linux_amd64 \

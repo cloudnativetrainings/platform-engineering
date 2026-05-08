@@ -24,24 +24,6 @@ yq e ".config.staticClients[0].RedirectURIs += \"https://$CODESPACE_NAME-8000.ap
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=dex
 ```
 
-### KCP
-
-Due to a breaking change in kcp we have to engage a feature gate in it. [The issue](https://github.com/kubermatic/developer-platform/issues/334) will be fixed.
-
-Add the following to the kcp helm values file `/training/12_setup-kcp-in-platform-cluster/helm/values_kcp.yaml`
-
-```yaml
-kcp:
-  extraFlags:
-    - '--feature-gates=EnableDeprecatedAPIExportVirtualWorkspacesUrls=true'
-```
-
-Re-release kcp
-
-```bash
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=kcp
-```
-
 ## Login into Kubermatic Helm Chart Repo
 
 ```bash

@@ -44,6 +44,6 @@ releases:
     chart: kcp/kcp
     labels:
       id: kcp
-    version: 0.12.5
+    version: 0.16.1
     values:
       - ./values_kcp.yaml

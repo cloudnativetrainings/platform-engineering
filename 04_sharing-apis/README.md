@@ -7,6 +7,8 @@ In this lab you will learn how to share CRDs and how CRs will get distrubted acr
 ```bash
 # create a workspace named `provider`
 kubectl create-workspace provider --enter
+
+# verify
 kubectl ws tree
 
 # create the apiresourceschema
@@ -21,7 +23,6 @@ kubectl get apiexport
 ## Consuming Resources
 
 ```bash
-
 # create a workspace named `consumer`
 kubectl ws :root
 kubectl create-workspace consumer --enter
@@ -68,5 +69,5 @@ kubectl -s "$API_ENDPOINT_URL/clusters/*" get mysharedresources -A
 ## Clean-up
 
 ```bash
-# stop kcp locally via <CTRL><C> in the bash running kcp, we do not need it anymore
+# stop kcp locally via <CTRL><C> in the bash running kcp, you do not need it anymore
 ```

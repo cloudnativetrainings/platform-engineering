@@ -39,11 +39,11 @@ kubectl create clusterrole myservice-syncagent \
   --resource=myservices
 kubectl create clusterrolebinding myservice-syncagent \
   --clusterrole=myservice-syncagent \
-  --serviceaccount=default:myservice-syncagent
+  --serviceaccount=default:myservice-syncagent-api-syncagent
 
 # verify
-kubectl auth can-i list MyService --as=system:serviceaccount:default:myservice-syncagent
-kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-syncagent
+kubectl auth can-i list MyService --as=system:serviceaccount:default:myservice-syncagent-api-syncagent
+kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-syncagent-api-syncagent
 
 # publish a resource
 kubectl apply -f /training/21_provide-a-service/myservice_published-resource.yaml

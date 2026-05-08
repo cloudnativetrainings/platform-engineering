@@ -2,7 +2,8 @@ SHELL = /bin/bash
 
 .PHONY: prepare-tf-config
 prepare-tf-config:
-	cp /root/kubeone_${K1_VERSION}_linux_amd64/examples/terraform/gce/*.tf /training/platform-cluster/tf_infra/
+	kubeone init --provider gce --cluster-name ${TRAINEE_NAME}-platform-cluster --path /training/platform-cluster/tf_infra
+	cp /training/platform-cluster/terraform.tfvars /training/platform-cluster/tf_infra
 	sed -i "s/<FILL-IN-YOUR-GCE-PROJECT-ID>/${GCE_PROJECT}/g" /training/platform-cluster/tf_infra/terraform.tfvars
 	sed -i "s/<FILL-IN-CLUSTER-NAME>/${TRAINEE_NAME}-platform-cluster/g" /training/platform-cluster/tf_infra/terraform.tfvars
 

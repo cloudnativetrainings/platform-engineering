@@ -12,8 +12,15 @@ releases:
     labels:
       id: myservice-syncagent
     values:
-      - crds:
+      - replicas: 1
+        enableLeaderElection: false
+        crds:
           enabled: true
         apiExportName: myorg.com
         agentName: myservice-syncagent
         kcpKubeconfig: kubeconfig-kcp-provider
+
+# TODO no tags for kdp releases which solve the issue due to no tags
+# => could be fixed via eg v0.9.0-g91c78b4293638d06c56d410fa89a107a5097bd61
+# => but going with 0.3.1 is also fine
+# https://quay.io/repository/kubermatic/developer-platform?tab=tags

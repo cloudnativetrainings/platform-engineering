@@ -8,12 +8,14 @@ releases:
     atomic: true
     createNamespace: true
     chart: kcp/api-syncagent
-    version: 0.4.2
+    version: 0.6.0
     labels:
       id: myservice-syncagent
     values:
-      - crds:
+      - replicas: 1
+        enableLeaderElection: false
+        crds:
           enabled: true
-        apiExportName: myapiexport
+        apiExportEndpointSliceName: myapiexport
         agentName: myservice-syncagent
         kcpKubeconfig: kubeconfig-kcp-provider

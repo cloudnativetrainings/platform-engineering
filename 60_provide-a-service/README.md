@@ -15,6 +15,9 @@ Do the following steps in the KDP Dashboard:
 ```bash
 # due to the training environment you have to add a parameter to the file `/training/.secrets/kubeconfig-kdp-root.yaml`
 yq e ".users[0].user.exec.args += \"--oidc-redirect-url=https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/.secrets/kubeconfig-kdp-root.yaml
+
+# verify
+KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 ```
 
 ### Create your service to get provided and consumedd
