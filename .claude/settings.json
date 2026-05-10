@@ -2,7 +2,9 @@
   "permissions": {
     "deny": [
       "Read(.secrets/**)",
-      "Glob(.secrets/**)"
+      "Glob(.secrets/**)",
+      "Read(.99_todos/**)",
+      "Glob(.99_todos/**)"
     ]
   }
 }
