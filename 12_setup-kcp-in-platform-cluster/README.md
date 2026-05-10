@@ -81,6 +81,21 @@ echo https://login.$PLATFORM_DOMAIN
 
 ## Install KCP
 
+Besides installing kcp in the platform cluster you have to care about the kcp-front-proxy.
+
+So, who is using the kcp-front-proxy?
+
+- allow developers to communicate to kcp via kubectl and proper kubeconfigs
+- allow the api-syncagents running in the provider clusters to communicate with kcp
+- allow the kdp dashboard to communicate with kcp
+
+What is the kcp-front-proxy doing?
+
+- tls termination
+- authentication
+- url path parsing, resolution of logical cluster names
+- forwarding of requests
+
 ```bash
 # set <DOMAIN>
 sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_setup-kcp-in-platform-cluster/helm/values_kcp.yaml

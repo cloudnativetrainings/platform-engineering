@@ -16,7 +16,8 @@ Do the following steps in the KDP Dashboard:
 # due to the training environment you have to add a parameter to the file `/training/.secrets/kubeconfig-kdp-root.yaml`
 yq e ".users[0].user.exec.args += \"--oidc-redirect-url=https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/.secrets/kubeconfig-kdp-root.yaml
 
-# verify
+# make use of the oidc-redirect mechanisms to grant access
+# note due to the training environment it gets extra complicated, you may have to click the url twice
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 ```
 
@@ -64,7 +65,7 @@ kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-
 # verify permissions of syncagent in kcp workspace :root:provider
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl auth can-i get logicalclusters/cluster
 
-# get the name of the apiexport, the syncagent configuration has to match the name of the apiexport 
+# get the name of the apiexport, the syncagent configuration has to match the name of the apiexport; you can find the configuration in the file named `/training/60_provide-a-service/myservice_syncagent-helmfile.yaml`
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl get apiexport
 
 # release the syncagent helm chart
@@ -94,7 +95,13 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws :root:provider
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get apiresourceschemas
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl label apiresourceschemas v275e6013.myservices.myorg.com syncagent.kcp.io/api-group=myorg.com
+```
 
+## Verify
+
+KDP creates an CRD called `service.core.kdp.k8c.io`. This is an abstraction of kcp's APIExport and APIResouceSchema objects.
+
+```bash
 # verify kdp service exists
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get service.core.kdp.k8c.io
 ```
