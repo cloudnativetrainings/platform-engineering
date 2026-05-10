@@ -99,7 +99,7 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl label apiresource
 
 ## Verify
 
-KDP creates an CRD called `service.core.kdp.k8c.io`. This is an abstraction of kcp's APIExport and APIResouceSchema objects.
+KDP creates a CRD called `service.core.kdp.k8c.io`. This is an abstraction of kcp's APIExport and APIResourceSchema objects.
 
 ```bash
 # verify kdp service exists
