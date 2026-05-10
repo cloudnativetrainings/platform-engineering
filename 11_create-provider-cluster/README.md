@@ -1,7 +1,7 @@
 
 # Create Provider Cluster
 
-In this lab you will setup up the provider cluster, which will provide services.
+In this lab you will set up the provider cluster, which will provide services.
 
 ```bash
 # create the cluster

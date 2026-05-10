@@ -6,7 +6,7 @@ In this lab you will run kcp locally and you will see the differences to a "real
 ## Start kcp
 
 ```bash
-# start kcp in a seperate bash
+# start kcp in a separate bash
 kcp start
 
 # verify in a new bash

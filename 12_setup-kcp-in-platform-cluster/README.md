@@ -7,13 +7,13 @@ In this lab you will install kcp and its dependencies into the platform cluster.
 kubectx admin@k8s-platform
 ```
 
-## Install Infra Components on Kuberentes Cluster
+## Install Infra Components on Kubernetes Cluster
 
 ```bash
 # install storageclass
 kubectl apply -f /training/platform-cluster/storageclass.yaml
 
-# release the ingess-nginx helm chart
+# release the ingress-nginx helm chart
 helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=ingress-nginx
 
 # release the cert-manager helm chart
@@ -23,7 +23,7 @@ helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.ya
 ## Finish LetsEncrypt setup
 
 ```bash
-# persist the IP address of the nginx inress controller loadbalancer
+# persist the IP address of the nginx ingress controller loadbalancer
 echo "export INGRESS_IP=$(kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> /root/.trainingrc
 
 # ensure changes are applied in your current bash

@@ -1,6 +1,6 @@
 # Create Platform Cluster
 
-In this lab you will setup up the platform cluster, which will run kcp.
+In this lab you will set up the platform cluster, which will run kcp.
 
 ## Create Kubernetes Cluster
 

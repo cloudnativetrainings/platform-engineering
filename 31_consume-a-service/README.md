@@ -8,7 +8,7 @@ In this lab you will learn how to consume a service.
 # switch to the consumer workspace
 kubectx consumer@kcp
 
-# note that the APIResouce MyService already exists
+# note that the APIResource MyService already exists
 kubectl api-resources | grep myservice
 
 # verify you have permission to create an instance of MyService

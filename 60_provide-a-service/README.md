@@ -20,7 +20,7 @@ yq e ".users[0].user.exec.args += \"--oidc-redirect-url=https://$CODESPACE_NAME-
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 ```
 
-### Create your service to get provided and consumedd
+### Create your service to get provided and consumed
 
 * add an organization named "provider"
 * create a service

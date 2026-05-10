@@ -1,6 +1,6 @@
 # Sharing Resources
 
-In this lab you will learn how to share CRDs and how CRs will get distrubted across workspaces.
+In this lab you will learn how to share CRDs and how CRs will get distributed across workspaces.
 
 ## Providing Resources
 
