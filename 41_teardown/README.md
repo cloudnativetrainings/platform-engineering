@@ -22,16 +22,16 @@ kubectl delete apibinding myapiexport
 
 ```bash
 # switch to the provider cluster
-kubectx admin@k8s-provider 
+kubectx admin@k8s-provider
 
 # delete published resource
-kubectl delete publishedresource myservice 
+kubectl delete publishedresource myservice
 
 # delete the syncagent
 helm uninstall myservice-syncagent
 
 # delete the secret holding the kubeconfig to be used by the syncagent
-kubectl delete secret kubeconfig-kcp-provider  
+kubectl delete secret kubeconfig-kcp-provider
 
 # delete permissions
 kubectl delete clusterrole myservice-syncagent

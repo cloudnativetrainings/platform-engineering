@@ -67,13 +67,13 @@ kubectl ws tree
 kubectl get cm
 
 # get existing workspaces via etcdctl
-etcdctl get --prefix /registry/tenancy.kcp.io/workspaces/ --keys-only 
+etcdctl get --prefix /registry/tenancy.kcp.io/workspaces/ --keys-only
 
 # get the logical-cluster-name of the workspace named `my-workspace-1`
 kubectl get ws my-workspace-1 -o jsonpath='{.metadata.annotations.internal\.tenancy\.kcp\.io/cluster}'
 
 # query etcd for all configmaps in the workspace named `my-workspace-1` in the namespace named `default`
-etcdctl get --prefix /registry/core/configmaps/<FILL-IN-THE-LOGICAL-CLUSTER-NAME>/default/ --keys-only 
+etcdctl get --prefix /registry/core/configmaps/<FILL-IN-THE-LOGICAL-CLUSTER-NAME>/default/ --keys-only
 
 # query etcd for the configmap named `my-configmap` in the workspace named `my-workspace-1` in the namespace named `default`
 etcdctl get /registry/core/configmaps/<FILL-IN-THE-LOGICAL-CLUSTER-NAME>/default/my-configmap
@@ -92,7 +92,7 @@ kubectl ws .
 kubectl ws tree
 
 # switch to your home workspace, note this one has a very cryptic name
-kubectl ws 
+kubectl ws
 
 # verify
 kubectl ws .

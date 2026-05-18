@@ -24,14 +24,14 @@ kubectl apply -f /training/14_create-kcp-provider-kubeconfig/provider_service-ac
 kubectl get secret provider-secret
 
 # get the token
-kubectl get secret provider-secret -o jsonpath={.data.token} | base64 -d > /training/.secrets/kcp-provider-token.yaml
+kubectl get secret provider-secret -o jsonpath='{.data.token}' | base64 -d > /training/.secrets/kcp-provider-token.yaml
 ```
 
 ## Create the kubeconfig
 
 ```bash
 # create cluster section in kubeconfig
-kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config set-cluster kcp-provider --server https://internal.$PLATFORM_DOMAIN:8443/clusters/root:provider --certificate-authority=/training/.secrets/kcp-front-proxy-cert-ca.crt 
+kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config set-cluster kcp-provider --server https://internal.$PLATFORM_DOMAIN:8443/clusters/root:provider --certificate-authority=/training/.secrets/kcp-front-proxy-cert-ca.crt
 
 # create user section in kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config set-credentials provider@kcp --token=/training/.secrets/kcp-provider-token.yaml

@@ -11,14 +11,14 @@ prepare-tf-config:
 terraform: prepare-tf-config
 	terraform -chdir=/training/provider-cluster/tf_infra init
 	terraform -chdir=/training/provider-cluster/tf_infra apply -var=control_plane_target_pool_members_count=1 -auto-approve
-	
+
 .PHONY: create-cluster
 create-cluster: terraform
 	cd /training/provider-cluster; kubeone apply -t /training/provider-cluster/tf_infra -y
 	cp /training/provider-cluster/${TRAINEE_NAME}-provider-cluster-kubeconfig /training/.secrets/kubeconfig-provider-cluster.yaml
 	yq e ".users |= map(select(.name == \"kubernetes-admin\").name = \"admin@k8s-provider\")" -i /training/.secrets/kubeconfig-provider-cluster.yaml
 	yq e ".contexts |= map(select(.context.user == \"kubernetes-admin\").context.user = \"admin@k8s-provider\")" -i /training/.secrets/kubeconfig-provider-cluster.yaml
-	yq ".contexts[0].name = \"admin@k8s-provider\"" -i /training/.secrets/kubeconfig-provider-cluster.yaml	
+	yq ".contexts[0].name = \"admin@k8s-provider\"" -i /training/.secrets/kubeconfig-provider-cluster.yaml
 	yq ".current-context = \"admin@k8s-provider\"" -i /training/.secrets/kubeconfig-provider-cluster.yaml
 	make -C /training squash-kubeconfigs
 	kubectx admin@k8s-provider

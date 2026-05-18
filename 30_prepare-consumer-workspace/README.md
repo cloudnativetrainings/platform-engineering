@@ -20,7 +20,7 @@ kubectl api-resources | grep myservice
 
 # give permissions to consumer
 kubectl create clusterrole myservice-consumer \
-  --verb=* \
+  --verb='*' \
   --resource=myservices
 kubectl create clusterrolebinding myservice-consumer \
   --clusterrole=myservice-consumer \

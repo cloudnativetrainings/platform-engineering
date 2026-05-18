@@ -47,12 +47,12 @@ kubectl get crd myservices.myorg.com
 
 # create the secret holding the kubeconfig to be used by the syncagent
 kubectl create secret generic kubeconfig-kcp-provider \
-  --namespace default\
+  --namespace default \
   --from-file kubeconfig=/training/.secrets/kubeconfig-kdp-provider.yaml
 
 # allow the syncagent to list objects of myservice
 kubectl create clusterrole myservice-syncagent \
-  --verb=* \
+  --verb='*' \
   --resource=myservices
 kubectl create clusterrolebinding myservice-syncagent \
   --clusterrole=myservice-syncagent \

@@ -24,14 +24,14 @@ kubectl apply -f /training/15_create-kcp-consumer-kubeconfig/consumer_service-ac
 kubectl get secret consumer-secret
 
 # get the token
-kubectl get secret consumer-secret -o jsonpath={.data.token} | base64 -d > /training/.secrets/kcp-consumer-token.yaml
+kubectl get secret consumer-secret -o jsonpath='{.data.token}' | base64 -d > /training/.secrets/kcp-consumer-token.yaml
 ```
 
 ## Create the kubeconfig
 
 ```bash
 # create cluster section in kubeconfig
-kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config set-cluster kcp-consumer --server https://internal.$PLATFORM_DOMAIN:8443/clusters/root:consumer --certificate-authority=/training/.secrets/kcp-front-proxy-cert-ca.crt 
+kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config set-cluster kcp-consumer --server https://internal.$PLATFORM_DOMAIN:8443/clusters/root:consumer --certificate-authority=/training/.secrets/kcp-front-proxy-cert-ca.crt
 
 # create user section in kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config set-credentials consumer@kcp --token=/training/.secrets/kcp-consumer-token.yaml

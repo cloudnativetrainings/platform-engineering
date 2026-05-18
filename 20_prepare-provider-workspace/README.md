@@ -20,8 +20,8 @@ kubectl create clusterrolebinding provider:admin \
 
 # verify
 kubectl auth can-i get logicalclusters/cluster --as=system:serviceaccount:default:provider
-kubectl auth can-i get apiexport  --as=system:serviceaccount:default:provider
-kubectl auth can-i create apiexport  --as=system:serviceaccount:default:provider
+kubectl auth can-i get apiexport --as=system:serviceaccount:default:provider
+kubectl auth can-i create apiexport --as=system:serviceaccount:default:provider
 ```
 
 ## Create the APIExport and APIBinding

@@ -11,7 +11,7 @@ mkdir /training/.secrets
 # drag and drop the provided files named "gcloud-service-account.json" and ".trainingrc" into the folder `/training/.secrets/`
 
 # merge the .trainingrc files
-cat /training/.secrets/.trainingrc >> /root/.trainingrc 
+cat /training/.secrets/.trainingrc >> /root/.trainingrc
 
 # ensure the kubeconfig is set properly
 echo 'export KUBECONFIG=/training/.secrets/kubeconfig.yaml' >> /root/.trainingrc

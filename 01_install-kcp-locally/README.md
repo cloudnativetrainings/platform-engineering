@@ -31,7 +31,7 @@ KREW_VERSION=0.5.0 \
   && mkdir -p /training/krew-linux_amd64 \
   && tar zxvf /training/krew-linux_amd64.tar.gz -C /training/krew-linux_amd64 \
   && /training/krew-linux_amd64/krew-linux_amd64 install krew \
-  && echo "export PATH=/root/.krew/bin:${PATH}"| tee -a /root/.trainingrc \
+  && echo "export PATH=/root/.krew/bin:${PATH}" | tee -a /root/.trainingrc \
   && echo "export KREW_VERSION=${KREW_VERSION}" | tee -a /root/.trainingrc
 
 # verify

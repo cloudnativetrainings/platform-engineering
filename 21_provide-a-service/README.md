@@ -35,7 +35,7 @@ kubectl logs -f --prefix -l app.kubernetes.io/instance=myservice-syncagent
 
 # allow the syncagent to list objects of myservice
 kubectl create clusterrole myservice-syncagent \
-  --verb=* \
+  --verb='*' \
   --resource=myservices
 kubectl create clusterrolebinding myservice-syncagent \
   --clusterrole=myservice-syncagent \
