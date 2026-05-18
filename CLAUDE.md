@@ -81,23 +81,24 @@ The labs build up two GCE Kubernetes clusters and layer kcp/KDP on top:
 
 Key cross-cutting pieces:
 
-- The kcp api-syncagent (`api-syncagent` helm chart, configured in `*_syncagent-helmfile.yaml`) is the bridge between a provider's real Kubernetes cluster and a kcp workspace; its `apiExportName` value must match the `APIExport` name in the kcp provider workspace. **The chart is deliberately pinned to `0.4.2` — see "Known issues" below before bumping.**
+- The kcp api-syncagent (`api-syncagent` helm chart, configured in `*_syncagent-helmfile.yaml`) is the bridge between a provider's real Kubernetes cluster and a kcp workspace; the chart value (`apiExportName` on ≤0.4, `apiExportEndpointSliceName` on ≥0.5) must match the `APIExport` / `APIExportEndpointSlice` name in the kcp provider workspace. The two labs are deliberately on different chart versions today — see "Known issues" below before bumping either.
 - DNS, TLS, and OIDC are coupled: ingress-nginx's LB IP is captured into `INGRESS_IP`, written into Google Cloud DNS for `$PLATFORM_DOMAIN` / `*.$PLATFORM_DOMAIN`, then DEX issues OIDC tokens at `https://login.$PLATFORM_DOMAIN`, and cert-manager + Let's Encrypt secure both.
 - The kcp front-proxy is exposed separately as a `LoadBalancer`; its IP (`KCP_FRONT_PROXY_IP`) is mapped to `internal.$PLATFORM_DOMAIN` and is what every kcp kubeconfig in `13/14/15` points at (`https://internal.$PLATFORM_DOMAIN:8443`).
 
-A visual reference for lab `04_sharing-apis` lives at `kcp-sharing-apis.excalidraw` (drag onto excalidraw.com to view).
+A visual reference for lab `04_sharing-apis` lives at `.99_todos/lab04/kcp-sharing-apis.excalidraw` (drag onto excalidraw.com to view). Like everything under `.99_todos/`, it's trainer scratch — useful background, but not surfaced to trainees in the codespace.
 
 ## Known issues / pinned versions
 
-Open chart and lab bugs are tracked in `bugs/<topic>.claude` as long-form Markdown — read these before changing helmfile versions, RBAC steps, or KDP-related lab content.
+The two syncagent helmfiles are intentionally on different chart versions today:
 
-Currently the most load-bearing one is `bugs/syncagent.claude`, which documents three independent issues that combine to force a deliberate downgrade:
+- `21_provide-a-service/myservice_syncagent-helmfile.yaml:11` — chart `kcp/api-syncagent` at **`0.6.0`** with the ≥0.5 field `apiExportEndpointSliceName: myapiexport`.
+- `60_provide-a-service/myservice_syncagent-helmfile.yaml:11` — chart `kcp/api-syncagent` at **`0.3.1`** with the ≤0.4 field `apiExportName: myorg.com`.
 
-- **api-syncagent chart is pinned to `0.4.2`** in both `21_provide-a-service/myservice_syncagent-helmfile.yaml` and `60_provide-a-service/myservice_syncagent-helmfile.yaml`. Do not bump it without re-reading that bug doc.
-  - `≥ 0.5` removed the `apiExportName` value with no fallback (now requires `apiExportEndpointSliceName`).
-  - The chart has a leader-election Role/RoleBinding name mismatch (`template "name"` vs `include "fullname"`), making the binding inert.
-  - The KDP servlet kubeconfig used in lab `60` lacks `apiexportendpointslices` permissions, which the new flag needs — so even fixing the chart locally won't unblock the KDP lab until KDP itself is patched.
-- The lab READMEs also create a `ClusterRoleBinding` for ServiceAccount `myservice-syncagent`, but the chart's default fullname helper produces `myservice-syncagent-api-syncagent`. Either set `serviceAccount.name: myservice-syncagent` in the helmfile values or update the `--serviceaccount=` flag in the lab steps.
+Lab `60` (KDP-driven) was held back because the KDP servlet kubeconfig downloaded from the dashboard did not grant `apiexportendpointslices` permissions that the ≥0.5 chart requires. Re-confirm KDP's current behaviour before bumping lab `60` in lockstep with lab `21`.
+
+Both helmfiles set `enableLeaderElection: false`, which sidesteps a chart bug where the leader-election Role and RoleBinding names didn't match (`template "name"` vs `include "fullname"`). Don't enable leader election without re-checking the chart.
+
+Other known trap: the lab `21` README creates a `ClusterRoleBinding` for ServiceAccount `myservice-syncagent-api-syncagent` — the chart's `fullname` helper produces this longer name under the current values, not the shorter `myservice-syncagent`. If you set `serviceAccount.name` in the helmfile values, also update the `--serviceaccount=` flag in the README to match (and vice versa).
 
 ## Working with this repo
 
@@ -106,3 +107,4 @@ Currently the most load-bearing one is `bugs/syncagent.claude`, which documents 
 - Lab `04_sharing-apis/` ships YAML for the `APIResourceSchema` and `APIExport` only — the corresponding `APIBinding` is created imperatively via `kubectl kcp bind apiexport`. There's no `apibinding.yaml` in the tree by design, even though the binding could be expressed declaratively.
 - `.99_todos/` is the trainer's scratch area (open issues, slide notes); the devcontainer hides it from VS Code's file tree, but it is still part of the repo. Don't treat it as canonical content.
 - The two clusters' kubeone configs live at `platform-cluster/kubeone.yaml` and `provider-cluster/kubeone.yaml`; their Terraform state is materialized into `*/tf_infra/` only after `make prepare-tf-config` copies the kubeone-provided `.tf` files in.
+- `.claude/skills/` contains two user-invocable lint skills: `lint md` runs the md-linter (prose-only review of every top-level `*/README.md`) and `lint code` runs the code-linter (shell snippets in READMEs + YAML/makefile correctness). Both skip `.secrets/` and `.99_todos/`, and treat the placeholder tokens (`<FILL-IN-…>`, `<DOMAIN>`, `your-email@example.com`, `TODO`, `XXXXX`) as intentional — do not "fix" those, and do not bump pinned versions during a lint run.
