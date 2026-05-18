@@ -20,3 +20,4 @@ Check the lab `README.md` files for typos and grammar issues.
 - Do not read, open, or grep files under `.99_todos/` 
 - Do not "fix" placeholders (`TODO`, `XXXXX`, `TODO-STUDENT-EMAIL@...`) — they are intentional.
 - Do not rewrite or reorder commands, YAML, or code blocks — only prose is in scope.
+- [Don't fix LetsEncrypt spelling](feedback_letsencrypt_spelling.md) — leave `LetsEncrypt` alone in lab READMEs; user rejected the brand-correct edit.
