@@ -47,7 +47,7 @@ kubectl apply -f /training/04_sharing-apis/api/consumer/mysharedresource.yaml
 kubectl get mysharedresources
 ```
 
-## Reading the Resource from the Providers Point of View
+## Reading the Resource from the Provider's Point of View
 
 ```bash
 # switch to the workspace named `provider`

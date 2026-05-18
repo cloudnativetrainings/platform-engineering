@@ -81,7 +81,7 @@ echo https://login.$PLATFORM_DOMAIN
 
 ## Install KCP
 
-Besides installing kcp in the platform cluster you have to care about the kcp-front-proxy.
+Besides installing kcp in the platform cluster you have to take care of the kcp-front-proxy.
 
 So, who is using the kcp-front-proxy?
 

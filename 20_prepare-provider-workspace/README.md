@@ -4,7 +4,7 @@ In this lab you prepare the workspace for the provider.
 
 ## Grant permissions to the Provider ServiceAccount
 
-The syncagent, running in the kubernetes cluster of the provider needs permissions in the kcp workspace.
+The syncagent, running in the Kubernetes cluster of the provider, needs permissions in the kcp workspace.
 
 ```bash
 # connect to kcp via root access

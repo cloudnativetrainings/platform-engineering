@@ -1,6 +1,6 @@
 # Teardown
 
-In this lab you will cleanup resources for being able to provide services via kdp afterwards.
+In this lab you will clean up resources so that you can provide services via KDP afterwards.
 
 ## Delete Resources in Consumer Workspace
 

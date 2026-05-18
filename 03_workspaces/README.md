@@ -57,7 +57,7 @@ kubectl get cm my-configmap -o jsonpath="{.data.key}"
 
 ## Verify data in etcd
 
-Lets take a look at the data stored in etcd.
+Let's take a look at the data stored in etcd.
 
 ```bash
 # verify if none of the above created configmaps are readable at the root workspace
@@ -81,7 +81,7 @@ etcdctl get /registry/core/configmaps/<FILL-IN-THE-LOGICAL-CLUSTER-NAME>/default
 
 ## The `home` workspace
 
-Something, you should be aware of.
+Something you should be aware of.
 
 ```bash
 # switch to the workspace named `my-workspace-2`

@@ -1,7 +1,7 @@
 
 # Run kcp locally
 
-In this lab you will run kcp locally and you will see the differences to a "real" Kubernetes Cluster.
+In this lab you will run kcp locally and you will see the differences from a "real" Kubernetes cluster.
 
 ## Start kcp
 

@@ -17,7 +17,7 @@ Do the following steps in the KDP Dashboard:
 
 ## Verify in provider cluster
 
-The user of the UI (eg a dev needing some infra) created some infra instance. Now, lets verify if the instance pops up in the provider cluster. If that is the case some operator running in the provider cluster will recoginize this and can create the actual infra in the provider cluster. This is out of scope for this workshop.
+The user of the UI (e.g., a dev needing some infra) created some infra instance. Now, let's verify if the instance pops up in the provider cluster. If that is the case, some operator running in the provider cluster will recognize this and can create the actual infra in the provider cluster. This is out of scope for this workshop.
 
 ```bash
 # switch to the provider cluster
