@@ -1,5 +1,7 @@
 # Create the KCP Consumer Kubeconfig
 
+> IMPORTANT: You are now the platform administrator!
+
 In this lab you will create a workspace for the consumer and create the kubeconfig enabling the Consumer to interact with it.
 
 ```bash
@@ -18,7 +20,7 @@ kubectl ws tree
 kubectl create sa consumer
 
 # create secret for sa token
-kubectl apply -f /training/15_create-kcp-consumer-kubeconfig/consumer_service-account-token-secret.yaml
+kubectl apply -f /training/15_ADMIN_create-kcp-consumer-kubeconfig/consumer_service-account-token-secret.yaml
 
 # verify
 kubectl get secret consumer-secret

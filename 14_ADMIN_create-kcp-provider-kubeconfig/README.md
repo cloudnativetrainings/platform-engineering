@@ -1,5 +1,7 @@
 # Create the KCP Provider Kubeconfig
 
+> IMPORTANT: You are now the platform administrator!
+
 In this lab you will create a workspace for the provider and create the kubeconfig enabling the Provider to interact with it.
 
 ```bash
@@ -18,7 +20,7 @@ kubectl ws tree
 kubectl create sa provider
 
 # create secret for sa token
-kubectl apply -f /training/14_create-kcp-provider-kubeconfig/provider_service-account-token-secret.yaml
+kubectl apply -f /training/14_ADMIN_create-kcp-provider-kubeconfig/provider_service-account-token-secret.yaml
 
 # verify
 kubectl get secret provider-secret

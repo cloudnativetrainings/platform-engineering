@@ -1,5 +1,7 @@
 # Verify
 
+> IMPORTANT: You are now the service provider!
+
 In this lab you will verify that the instance of MyService was created in the provider cluster. Afterwards a Controller in the provider can pick up the work.
 
 ## Verify the instance was synced to the provider cluster

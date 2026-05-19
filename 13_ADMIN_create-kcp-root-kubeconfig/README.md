@@ -1,6 +1,8 @@
 
 # Create the KCP Root Kubeconfig
 
+> IMPORTANT: You are now the platform administrator!
+
 In this lab you will create the kubeconfig for being able to do admin tasks on kcp running inside the platform cluster.
 
 Documentation can be found in the [kcp-dev github repository](https://github.com/kcp-dev/helm-charts/tree/main/charts/kcp#initial-access).
@@ -20,7 +22,7 @@ kubens kcp-system
 kubectl get secret kcp-front-proxy-cert -o=jsonpath='{.data.tls\.crt}' | base64 -d > /training/.secrets/kcp-front-proxy-cert-ca.crt
 
 # create cluster admin cert
-kubectl apply -f /training/13_create-kcp-root-kubeconfig/cluster-admin-client-cert.yaml
+kubectl apply -f /training/13_ADMIN_create-kcp-root-kubeconfig/cluster-admin-client-cert.yaml
 
 # verify
 kubectl get cert cluster-admin-client-cert

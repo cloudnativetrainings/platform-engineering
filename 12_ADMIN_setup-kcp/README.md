@@ -1,5 +1,7 @@
 # Setup Platform
 
+> IMPORTANT: You are now the platform administrator!
+
 In this lab you will install kcp and its dependencies into the platform cluster.
 
 ```bash
@@ -14,10 +16,10 @@ kubectx admin@k8s-platform
 kubectl apply -f /training/platform-cluster/storageclass.yaml
 
 # release the ingress-nginx helm chart
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=ingress-nginx
+helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=ingress-nginx
 
 # release the cert-manager helm chart
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=cert-manager
+helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=cert-manager
 ```
 
 ## Finish LetsEncrypt setup
@@ -53,13 +55,13 @@ kubectl apply -f /training/platform-cluster/cluster-issuer_letsencrypt-staging.y
 
 ```bash
 # set <DOMAIN>
-sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
+sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_ADMIN_setup-kcp/helm/values_dex.yaml
 
 # set <OIDC_CLIENT_SECRET>
 OIDC_CLIENT_SECRET=$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)
 echo "export OIDC_CLIENT_SECRET=$OIDC_CLIENT_SECRET" >> /root/.trainingrc
 source /root/.trainingrc
-yq ".config.staticClients[0].secret = \"$OIDC_CLIENT_SECRET\"" -i /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
+yq ".config.staticClients[0].secret = \"$OIDC_CLIENT_SECRET\"" -i /training/12_ADMIN_setup-kcp/helm/values_dex.yaml
 
 # set <ADMIN_PASSWORD_HASH>
 PASSWORD="<FILL-IN-YOUR-PASSWORD>"
@@ -67,10 +69,10 @@ PASSWORD_HASH=$(echo "$PASSWORD" | htpasswd -inBC 10 admin | cut -d: -f2)
 echo "export PASSWORD=$PASSWORD" >> /root/.trainingrc
 echo "export PASSWORD_HASH='$PASSWORD_HASH'" >> /root/.trainingrc
 source /root/.trainingrc
-yq ".config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
+yq ".config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/12_ADMIN_setup-kcp/helm/values_dex.yaml
 
 # release the dex helm chart
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=dex
+helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=dex
 
 # wait until dex certificate gets valid
 watch -n 1 kubectl -n dex get certs
@@ -79,29 +81,29 @@ watch -n 1 kubectl -n dex get certs
 echo https://login.$PLATFORM_DOMAIN
 ```
 
-## Install KCP
+## Install kcp
 
-Besides installing kcp in the platform cluster you have to take care of the kcp-front-proxy.
+Besides installing kcp in the platform cluster, you have to take care of the kcp-front-proxy.
 
 So, who is using the kcp-front-proxy?
 
-- allow developers to communicate to kcp via kubectl and proper kubeconfigs
+- allow developers to communicate with kcp via kubectl and proper kubeconfigs
 - allow the api-syncagents running in the provider clusters to communicate with kcp
-- allow the kdp dashboard to communicate with kcp
+- allow the KDP dashboard to communicate with kcp
 
 What is the kcp-front-proxy doing?
 
-- tls termination
+- TLS termination
 - authentication
-- url path parsing, resolution of logical cluster names
+- URL path parsing, resolution of logical cluster names
 - forwarding of requests
 
 ```bash
 # set <DOMAIN>
-sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_setup-kcp-in-platform-cluster/helm/values_kcp.yaml
+sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/12_ADMIN_setup-kcp/helm/values_kcp.yaml
 
 # release the kcp helm chart
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=kcp
+helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=kcp
 
 # persist the IP address of the kcp-front-proxy loadbalancer
 echo "export KCP_FRONT_PROXY_IP=$(kubectl -n kcp-system get svc kcp-front-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> /root/.trainingrc

@@ -1,6 +1,6 @@
 ---
 name: code-linter
-description: Checks a lab README for typos and grammar issues. Invoke when the user says "lint code".
+description: Checks a lab README for typos and grammar issues. Invoke when the user says "lint code" or "lint".
 ---
 
 # Code linter
@@ -12,6 +12,7 @@ Check the lab `README.md` files for issues within the code blocks. Furthermore c
 - Otherwise check every top-level `*/README.md` (skip `.99_todos/`).
 - Check on usage of file paths that only absolute paths are used, starting with `/training`. Verify if the paths are correct.
 - Report findings as `file_path:line_number` with the fix suggestion.
+- If you find any TODO make me aware of this.
 - Ask before changing files if this should be done
 
 ## Must not

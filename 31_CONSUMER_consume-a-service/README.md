@@ -1,5 +1,7 @@
 # Consume a Service
 
+> IMPORTANT: You are now the service consumer!
+
 In this lab you will learn how to consume a service.
 
 ## Create an instance of MyService in the consumer workspace
@@ -15,7 +17,7 @@ kubectl api-resources | grep myservice
 kubectl auth can-i create MyService
 
 # create the instance of the CRD MyService
-kubectl apply -f /training/31_consume-a-service/mymyservice.yaml
+kubectl apply -f /training/31_CONSUMER_consume-a-service/mymyservice.yaml
 
 # verify
 kubectl get myservices.myorg.com
