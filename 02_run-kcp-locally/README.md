@@ -6,10 +6,10 @@ In this lab you will run kcp locally and you will see the differences from a "re
 ## Start kcp
 
 ```bash
-# start kcp in a separate bash
+# [BASH2] start kcp
 kcp start
 
-# verify in a new bash
+# verify
 ps aux | grep kcp
 
 # explore and explain directory `/training/.kcp/`

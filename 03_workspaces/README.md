@@ -35,6 +35,26 @@ kubectl get workspacetypes
 kubectl api-resources | grep kcp.io
 ```
 
+## Workspace Types
+
+See [kcp-docs](https://docs.kcp.io/kcp/main/concepts/workspaces/workspace-types/) for details.
+
+### Root
+
+Exists once in a kcp instance. The root for everything else.
+
+### Organization
+
+Child workspace of a workspace of type `root`; allows separating organizations / tenants.
+
+### Team
+
+Child workspace of a workspace of type `organization` or `team`; allows creating hierarchical structures, e.g. an organization which has multiple teams, each of which holds multiple sub-teams.
+
+### Home
+
+A sandbox workspace per user, for playing around.
+
 ## Multitenancy
 
 ```bash

@@ -1,0 +1,9 @@
+apiVersion: apis.kcp.io/v1alpha1
+kind: APIBinding
+metadata:
+  name: myapibinding
+spec:
+  reference:
+    export:
+      path: root:provider
+      name: myapiexport
