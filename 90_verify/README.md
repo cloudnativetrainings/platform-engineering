@@ -1,21 +1,11 @@
 
-# Consume a Service
+# Verify
 
-In this lab you will consume a service via KDP.
-
-## Create an instance of MyService
-
-Do the following steps in the KDP Dashboard:
-
-* add an organization named "consumer"
-* click the button with the text "external service" and choose the service named "myservice"
-* create an instance of the service
-  * name: "myservice-instance"
-  * namespace: "default"
-  * version: "v1"
-  * message: "something"
+In this lab you will learn how to verify that KDP created the instance in the provider cluster.
 
 ## Verify in provider cluster
+
+> IMPORTANT: You are now the service provider!
 
 The user of the UI (e.g., a dev needing some infra) created some infra instance. Now, let's verify if the instance pops up in the provider cluster. If that is the case, some operator running in the provider cluster will recognize this and can create the actual infra in the provider cluster. This is out of scope for this workshop.
 
@@ -31,6 +21,8 @@ kubectl get myservices.myorg.com -A -o yaml
 ```
 
 ## Verify in consumer workspace
+
+> IMPORTANT: You are now the platform administrator!
 
 ```bash
 # switch to the consumer workspace via admin

@@ -1,5 +1,7 @@
 # Provide a Service
 
+> IMPORTANT: You are now the service provider!
+
 In this lab you will expose a service via KDP.
 
 ## Preparations in the KDP Dashboard
@@ -21,7 +23,7 @@ yq e ".users[0].user.exec.args += \"--oidc-redirect-url=https://$CODESPACE_NAME-
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 ```
 
-### Create your service to get provided and consumed
+### Create the service to be provided and consumed
 
 * add an organization named "provider"
 * create a service
@@ -39,8 +41,8 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 # switch to the provider cluster
 kubectx admin@k8s-provider
 
-# create the CRD (note it may be still there from the kcp labs)
-kubectl apply -f /training/60_provide-a-service/myservice_crd.yaml
+# create the CRD (if you deleted it in the kcp labs)
+kubectl apply -f /training/60_PROVIDER_provide-a-service/myservice_crd.yaml
 
 # verify
 kubectl get crd myservices.myorg.com
@@ -65,11 +67,11 @@ kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-
 # verify permissions of syncagent in kcp workspace :root:provider
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl auth can-i get logicalclusters/cluster
 
-# get the name of the apiexport, the syncagent configuration has to match the name of the apiexport; you can find the configuration in the file named `/training/60_provide-a-service/myservice_syncagent-helmfile.yaml`
+# get the name of the apiexport, the syncagent configuration has to match the name of the apiexport; you can find the configuration in the file named `/training/60_PROVIDER_provide-a-service/myservice_syncagent-helmfile.yaml`
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl get apiexport
 
 # release the syncagent helm chart
-helmfile sync -f /training/60_provide-a-service/myservice_syncagent-helmfile.yaml --selector id=myservice-syncagent
+helmfile sync -f /training/60_PROVIDER_provide-a-service/myservice_syncagent-helmfile.yaml --selector id=myservice-syncagent
 
 # verify pods are running
 kubectl get pods
@@ -78,7 +80,7 @@ kubectl get pods
 kubectl logs -f -l app.kubernetes.io/instance=myservice-syncagent
 
 # publish resource
-kubectl apply -f /training/60_provide-a-service/myservice_published-resource.yaml
+kubectl apply -f /training/60_PROVIDER_provide-a-service/myservice_published-resource.yaml
 
 # verify the api-resource named `myservice` exists on the provider workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl api-resources
@@ -95,13 +97,4 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws :root:provider
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get apiresourceschemas
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl label apiresourceschemas v275e6013.myservices.myorg.com syncagent.kcp.io/api-group=myorg.com
-```
-
-## Verify
-
-KDP creates a CRD called `service.core.kdp.k8c.io`. This is an abstraction of kcp's APIExport and APIResourceSchema objects.
-
-```bash
-# verify kdp service exists
-KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get service.core.kdp.k8c.io
 ```

@@ -36,6 +36,9 @@ kubectl delete secret kubeconfig-kcp-provider
 # delete permissions
 kubectl delete clusterrole myservice-syncagent
 kubectl delete clusterrolebinding myservice-syncagent
+
+# delete the CRD
+kubectl delete crd myservices.myorg.com
 ```
 
 ### Delete Resources in Provider Workspace
