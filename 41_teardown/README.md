@@ -51,11 +51,11 @@ kubectl delete apiexport myapiexport
 kubectl delete apiresourceschema --all
 ```
 
-## Delete other resources
+## Delete Other Resources
 
 > IMPORTANT: You are now the platform administrator!
 
-### Delete consumer resources
+### Delete Consumer Resources
 
 ```bash
 # connect to kcp via root access

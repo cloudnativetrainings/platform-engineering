@@ -1,4 +1,4 @@
-# Expose a Service
+# Provide a Service
 
 In this lab you will expose a service via KDP.
 
@@ -29,7 +29,7 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
   * api group "myorg.com"
   * api-syncagent-kubeconfig name "provider-kubeconfig"
   * api-syncagent-kubeconfig namespace named "default"
-* activate service named "myservice" in ui
+* activate service named "myservice" in UI
 * download the kubeconfig of the service
 * drag and drop the kubeconfig into the folder `/training/.secrets/` in your codespace and rename the kubeconfig to `kubeconfig-kdp-provider.yaml`.
 

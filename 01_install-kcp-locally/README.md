@@ -1,5 +1,5 @@
 
-# Install KCP locally
+# Install kcp locally
 
 In this lab you will install
 

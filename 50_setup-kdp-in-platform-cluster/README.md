@@ -18,10 +18,10 @@ KDP supports you in the kubeconfig madness. Therefore we have to adapt a few thi
 kubectl krew install oidc-login
 
 # add a redirect URI to dex; this is needed only due to the training platform
-yq e ".config.staticClients[0].RedirectURIs += \"https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/12_setup-kcp-in-platform-cluster/helm/values_dex.yaml
+yq e ".config.staticClients[0].RedirectURIs += \"https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/12_ADMIN_setup-kcp/helm/values_dex.yaml
 
 # release the changes in dex
-helmfile sync --file /training/12_setup-kcp-in-platform-cluster/helm/helmfile.yaml --selector id=dex
+helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=dex
 ```
 
 ## Login into Kubermatic Helm Chart Repo
