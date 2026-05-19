@@ -24,5 +24,8 @@ kubectl create clusterrolebinding provider:admin \
 # after recview
 
 add kro
-quay passwords
 version upgrades?
+
+# do also apibindings declaratively
+
+# PS1 destroys copy&paste, is it so???
