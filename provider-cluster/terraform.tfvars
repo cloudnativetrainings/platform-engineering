@@ -1,4 +1,4 @@
-project                                 = "<FILL-IN-YOUR-P-PROJECT-ID>"
+project                                 = "<FILL-IN-YOUR-GCP-PROJECT-ID>"
 cluster_name                            = "<FILL-IN-CLUSTER-NAME>"
 region                                  = "europe-west3"
 ssh_public_key_file                     = "/training/.secrets/gcp.pub"
