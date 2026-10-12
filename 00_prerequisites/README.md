@@ -26,8 +26,8 @@ source /root/.trainingrc
 # create a ssh key pair
 make -C /training/00_prerequisites/ ssh
 
-# ensure gce configuration properly setup
-make -C /training/00_prerequisites/ gce
+# ensure p configuration properly setup
+make -C /training/00_prerequisites/ gcp
 
 # add google credentials
 echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc

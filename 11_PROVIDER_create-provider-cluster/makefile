@@ -4,7 +4,7 @@ SHELL = /bin/bash
 prepare-tf-config:
 	kubeone init --provider gce --cluster-name ${TRAINEE_NAME}-provider-cluster --path /training/provider-cluster/tf_infra
 	cp /training/provider-cluster/terraform.tfvars /training/provider-cluster/tf_infra
-	sed -i "s/<FILL-IN-YOUR-GCE-PROJECT-ID>/${GCE_PROJECT}/g" /training/provider-cluster/tf_infra/terraform.tfvars
+	sed -i "s/<FILL-IN-YOUR-GCE-PROJECT-ID>/${GCP_PROJECT}/g" /training/provider-cluster/tf_infra/terraform.tfvars
 	sed -i "s/<FILL-IN-CLUSTER-NAME>/${TRAINEE_NAME}-provider-cluster/g" /training/provider-cluster/tf_infra/terraform.tfvars
 
 .PHONY: terraform
