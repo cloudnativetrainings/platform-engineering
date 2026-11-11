@@ -62,14 +62,18 @@ A sandbox workspace per user, for playing around.
 kubectl ws :root:my-workspace-1
 kubectl ws .
 kubectl ws tree
+
 kubectl create configmap my-configmap --from-literal=key="some value"
 kubectl get cm
 kubectl get cm my-configmap -o jsonpath="{.data.key}"
+```
 
+```bash
 # create a configmap in the workspace named `my-workspace-2`
 kubectl ws :root:my-workspace-2
 kubectl ws .
 kubectl ws tree
+
 kubectl create configmap my-configmap --from-literal=key="another value"
 kubectl get cm
 kubectl get cm my-configmap -o jsonpath="{.data.key}"
@@ -85,7 +89,9 @@ kubectl ws :root
 kubectl ws .
 kubectl ws tree
 kubectl get cm
+```
 
+```bash
 # get existing workspaces via etcdctl
 etcdctl get --prefix /registry/tenancy.kcp.io/workspaces/ --keys-only
 

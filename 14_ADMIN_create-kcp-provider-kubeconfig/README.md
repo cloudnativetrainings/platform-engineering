@@ -24,7 +24,9 @@ kubectl apply -f /training/14_ADMIN_create-kcp-provider-kubeconfig/provider_serv
 
 # verify
 kubectl get secret provider-secret
+```
 
+```bash
 # get the token
 kubectl get secret provider-secret -o jsonpath='{.data.token}' | base64 -d > /training/.secrets/kcp-provider-token.yaml
 ```
@@ -40,18 +42,31 @@ kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config set-
 
 # create context section in kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config set-context provider@kcp --cluster=kcp-provider --user=provider@kcp
-kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config use-context provider@kcp
 
+kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config use-context provider@kcp
+```
+
+```bash
 # flatten kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-provider.yaml config view --flatten > /training/.secrets/kubeconfig-kcp-provider-flat.yaml
-yq e '.users[0].user.token = load_str("/training/.secrets/kcp-provider-token.yaml")' -i /training/.secrets/kubeconfig-kcp-provider-flat.yaml
+```
 
+```bash
+# set the token
+yq e '.users[0].user.token = load_str("/training/.secrets/kcp-provider-token.yaml")' -i /training/.secrets/kubeconfig-kcp-provider-flat.yaml
+```
+
+```bash
 # del the non-flat kubeconfig
 rm /training/.secrets/kubeconfig-kcp-provider.yaml
+```
 
+```bash
 # squash the kubeconfigs
 make -C /training squash-kubeconfigs
+```
 
+```bash
 # verify
 kubectx provider@kcp
 kubectl api-resources

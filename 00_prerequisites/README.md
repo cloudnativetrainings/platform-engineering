@@ -7,30 +7,76 @@ In this lab you will ensure everything is in place for the later labs.
 ```bash
 # create a directory for holding sensitive information
 mkdir /training/.secrets
+```
 
-# drag and drop the provided files named "gcloud-service-account.json" and ".trainingrc" into the folder `/training/.secrets/`
+Drag and drop the files (provided by the trainer) into the directory `/training/.secrets/`.
 
-# merge the .trainingrc files
-cat /training/.secrets/.trainingrc >> /root/.trainingrc
+- environment.sh
+- gcp-service-account.json
 
-# ensure the kubeconfig is set properly
-echo 'export KUBECONFIG=/training/.secrets/kubeconfig.yaml' >> /root/.trainingrc
+## Set important environment variables
+
+> **IMPORTANT:**
+> These variables will get referenced during the following labs. Make sure to set them before continuing. The shell script `/training/.secrets/environment.sh` persists them in the file `/root/.trainingrc`.
+
+```bash
+# make the shell script executable
+chmod 0700 /training/.secrets/environment.sh
+
+# persist the environment variables into the file /root/.trainingrc
+/training/.secrets/environment.sh
 
 # ensure changes are applied in your current bash
 source /root/.trainingrc
+
+# verify
+echo $GCP_PROJECT
+echo $TRAINEE_NAME
+echo $TRAINEE_EMAIL
+echo $DOMAIN
+echo $PLATFORM_DOMAIN
+echo $PROVIDER_DOMAIN
+echo $DNS_ZONE_NAME
+echo $KUBECONFIG
 ```
 
-## Prepare your environment
+## Ensure SSH requirements
+
+KubeOne needs an SSH key pair for communicating with the control plane and worker nodes.
 
 ```bash
-# create a ssh key pair
-make -C /training/00_prerequisites/ ssh
+# create a ssh-key-pair for gcp
+ssh-keygen -q -N "" -t rsa -f /training/.secrets/gcp -C root
 
-# ensure p configuration properly setup
-make -C /training/00_prerequisites/ gcp
+# ensure proper private key file permissions
+chmod 400 /training/.secrets/gcp
 
-# add google credentials
-echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc
+# ensure .ssh key is known on environment restarts
+echo 'eval `ssh-agent`' >> /root/.trainingrc
+echo "ssh-add /training/.secrets/gcp" >> /root/.trainingrc
+
+# ensure changes are applied in your current bash
+source /root/.trainingrc
+
+# verify agent is running and holds proper key
+ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gcp)"
+```
+
+## Configure GCP
+
+```bash
+# activate gcp account
+gcloud auth activate-service-account --key-file=/training/.secrets/gcp-service-account.json
+
+# set the gcp project
+gcloud config set project $GCP_PROJECT --quiet
+
+# set the compute region and zone
+gcloud config set compute/region europe-west3
+gcloud config set compute/zone europe-west3-a
+
+# verify your settings
+gcloud config list
 ```
 
 ## Verify your environment

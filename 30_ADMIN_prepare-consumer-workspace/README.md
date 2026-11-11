@@ -10,16 +10,24 @@ kubectx root@kcp
 
 # switch to the workspace of the consumer
 kubectl ws :root:consumer
+```
 
+```bash
 # note that the resource type myservice does not exist yet
 kubectl api-resources | grep myservice
+```
 
+```bash
 # bind the apiexport from the provider workspace into the consumer workspace
 kubectl apply -f /training/30_ADMIN_prepare-consumer-workspace/myapibinding.yaml
+```
 
+```bash
 # now the resource type has to exist
 kubectl api-resources | grep myservice
+```
 
+```bash
 # give permissions to consumer
 kubectl create clusterrole myservice-consumer \
   --verb='*' \

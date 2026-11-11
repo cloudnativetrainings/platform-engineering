@@ -24,7 +24,9 @@ kubectl apply -f /training/15_ADMIN_create-kcp-consumer-kubeconfig/consumer_serv
 
 # verify
 kubectl get secret consumer-secret
+```
 
+```bash
 # get the token
 kubectl get secret consumer-secret -o jsonpath='{.data.token}' | base64 -d > /training/.secrets/kcp-consumer-token.yaml
 ```
@@ -40,18 +42,31 @@ kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config set-
 
 # create context section in kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config set-context consumer@kcp --cluster=kcp-consumer --user=consumer@kcp
-kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config use-context consumer@kcp
 
+kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config use-context consumer@kcp
+```
+
+```bash
 # flatten kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-consumer.yaml config view --flatten > /training/.secrets/kubeconfig-kcp-consumer-flat.yaml
-yq e '.users[0].user.token = load_str("/training/.secrets/kcp-consumer-token.yaml")' -i /training/.secrets/kubeconfig-kcp-consumer-flat.yaml
+```
 
+```bash
+# set the token
+yq e '.users[0].user.token = load_str("/training/.secrets/kcp-consumer-token.yaml")' -i /training/.secrets/kubeconfig-kcp-consumer-flat.yaml
+```
+
+```bash
 # del the non-flat kubeconfig
 rm /training/.secrets/kubeconfig-kcp-consumer.yaml
+```
 
+```bash
 # squash the kubeconfigs
 make -C /training squash-kubeconfigs
+```
 
+```bash
 # verify
 kubectx consumer@kcp
 kubectl api-resources

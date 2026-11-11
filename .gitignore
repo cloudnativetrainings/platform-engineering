@@ -1,3 +1,10 @@
 .DS_Store
 .secrets/
 */*kubeconfig*
+*.tar.gz
+*_amd64/
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+terraform.tfstate*
+.kcp/

@@ -8,7 +8,9 @@ In this lab you will run kcp locally and you will see the differences from a "re
 ```bash
 # [BASH2] start kcp
 kcp start
+```
 
+```bash
 # verify
 ps aux | grep kcp
 
@@ -19,12 +21,16 @@ tree /training/.kcp
 ## Explore the "Kubernetes Cluster"
 
 ```bash
-# set the kubeconfig
+# copy the kubeconfig
 cp /training/.kcp/admin.kubeconfig /training/.secrets/kubeconfig.yaml
+```
 
+```bash
 # verify
 kubectl api-resources
+```
 
+```bash
 # does not work
 kubectl run -it nginx --image nginx
 ```

@@ -9,7 +9,9 @@ In this lab you will verify that the instance of MyService was created in the pr
 ```bash
 # switch to the provider cluster
 kubectx admin@k8s-provider
+```
 
+```bash
 # verify the instance exists
 kubectl get myservices.myorg.com -A
 ```

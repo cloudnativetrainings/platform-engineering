@@ -1,13 +1,36 @@
-# Platform Engineering
+# Kubermatic Developer Platform
 
-In this training you will learn how to do Platform Engineering.
+In this training you will learn how to install and administer the Kubermatic Developer Platform (KDP).
 
-## Setup the training environment
+## Set up the training environment
 
-1. Open [Github Codespaces](https://github.com/codespaces) and create your new `cloudnativetrainings/platform-engineering` codespace.
-1. Start with the [00_prerequisites](./00_prerequisites/README.md) lab.
+### Clone the Git Repo
 
-## Teardown the training environment
+```bash
+git clone https://github.com/cloudnativetrainings/platform-engineering
+```
 
-1. Run [99_teardown](./99_teardown/README.md).
-1. Delete your `cloudnativetrainings/platform-engineering` codespace via [Github Codespaces](https://github.com/codespaces).
+### Run the kdp-workshop Container
+
+```bash
+docker run -it -d \
+  --name kdp-workshop \
+  --restart=always \
+  --cpus=2 \
+  --memory=4g \
+  -p 8000:8000 \
+  -p 8080:8080 \
+  --hostname kdp-workshop \
+  -v $(PWD)/platform-engineering:/training \
+  quay.io/kubermatic-labs/training-ghcs-platform-engineering-trainee-environment:2.0.0
+```
+
+### Access your kdp-workshop IDE with your browser
+
+The URL therefore is <http://localhost:8080>
+
+### Verify acceess to GCP from within the container
+
+```bash
+gcloud info --run-diagnostics 
+```

@@ -9,13 +9,17 @@ In this lab you will learn how to provide a service.
 ```bash
 # connect to kcp via provider access
 kubectx provider@kcp
+```
 
+```bash
 # create the apiexport
 kubectl apply -f /training/21_PROVIDER_provide-a-service/myapiexport.yaml
 
 # verify
 kubectl get apiexport myapiexport
+```
 
+```bash
 # get the apiresourceschema
 # note this does not exist yet — the syncagent (installed later) will generate it from the CRD you will create in the next section
 kubectl get apiresourceschema
@@ -43,13 +47,19 @@ kubectl create secret generic kubeconfig-kcp-provider \
 
 # verify
 kubectl get secrets kubeconfig-kcp-provider -o jsonpath="{.data.kubeconfig}" | base64 -d
+```
 
+```bash
 # release the syncagent helm chart
 helmfile sync -f /training/21_PROVIDER_provide-a-service/myservice_syncagent-helmfile.yaml --selector id=myservice-syncagent
+```
 
+```bash
 # verify logs of syncagent pods
 kubectl logs -f --prefix -l app.kubernetes.io/instance=myservice-syncagent
+```
 
+```bash
 # allow the syncagent to list objects of myservice
 kubectl create clusterrole myservice-syncagent \
   --verb='*' \
@@ -61,16 +71,24 @@ kubectl create clusterrolebinding myservice-syncagent \
 # verify
 kubectl auth can-i list MyService --as=system:serviceaccount:default:myservice-syncagent-api-syncagent
 kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-syncagent-api-syncagent
+```
 
+```bash
 # publish a resource
 kubectl apply -f /training/21_PROVIDER_provide-a-service/myservice_published-resource.yaml
+```
 
+```bash
 # logs of syncagent pods
 kubectl logs -f -l app.kubernetes.io/instance=myservice-syncagent
+```
 
+```bash
 # for sure there is no instance of myservice, yet
 kubectl get myservices.myorg.com -A
+```
 
+```bash
 # verify if syncagents created the apiresourceschema in the provider workspace
 kubectx provider@kcp
 kubectl get apiresourceschema

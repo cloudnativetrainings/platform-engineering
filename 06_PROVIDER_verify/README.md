@@ -7,16 +7,24 @@ In this lab you will learn how to verify from the service provider's point of vi
 ```bash
 # switch to the workspace named `provider`
 kubectl ws :root:provider
+```
 
+```bash
 # store the url of the apiexport into an env var
-export API_ENDPOINT_URL=$(kubectl get apiexportendpointslices.apis.kcp.io myapiexport -o jsonpath={.status.endpoints[0].url})
+export API_ENDPOINT_URL=$(kubectl get apiexportendpointslices.apis.kcp.io myapiexport -o jsonpath='{.status.endpoints[0].url}')
+```
 
+```bash
 # verify
 echo $API_ENDPOINT_URL
+```
 
+```bash
 # get all the api-resources of the workspace named `consumer`
 kubectl -s "$API_ENDPOINT_URL/clusters/*" api-resources
+```
 
+```bash
 # get all mysharedresource instances in the workspace named `consumer`
 kubectl -s "$API_ENDPOINT_URL/clusters/*" get mysharedresources -A
 ```

@@ -20,16 +20,24 @@ kubens kcp-system
 ```bash
 # obtain the CA cert of the kcp-front-proxy
 kubectl get secret kcp-front-proxy-cert -o=jsonpath='{.data.tls\.crt}' | base64 -d > /training/.secrets/kcp-front-proxy-cert-ca.crt
+```
 
+```bash
 # create cluster admin cert
 kubectl apply -f /training/13_ADMIN_create-kcp-root-kubeconfig/cluster-admin-client-cert.yaml
+```
 
+```bash
 # verify
 kubectl get cert cluster-admin-client-cert
-kubectl get secret cluster-admin-client-cert
 
+kubectl get secret cluster-admin-client-cert
+```
+
+```bash
 # get data from cluster admin cert
 kubectl get secret cluster-admin-client-cert -o=jsonpath='{.data.tls\.crt}' | base64 -d > /training/.secrets/cluster-admin-client-cert.crt
+
 kubectl get secret cluster-admin-client-cert -o=jsonpath='{.data.tls\.key}' | base64 -d > /training/.secrets/cluster-admin-client-cert.key
 ```
 
@@ -46,11 +54,16 @@ kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-root.yaml config set-cred
 # create context section in kubeconfig
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-root.yaml config set-context base@kcp --cluster=kcp-base --user=root@kcp
 kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-root.yaml config set-context root@kcp --cluster=kcp-root --user=root@kcp
-kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-root.yaml config use-context root@kcp
 
+kubectl --kubeconfig=/training/.secrets/kubeconfig-kcp-root.yaml config use-context root@kcp
+```
+
+```bash
 # squash the kubeconfigs
 make -C /training squash-kubeconfigs
+```
 
+```bash
 # verify
 kubectx
 kubectl ws tree

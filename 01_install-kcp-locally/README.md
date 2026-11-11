@@ -11,8 +11,8 @@ In this lab you will install
 
 ```bash
 # install kcp
-KCP_VERSION=0.31.1 \
-  && curl -fsSLO https://github.com/kcp-dev/kcp/releases/download/v${KCP_VERSION}/kcp_${KCP_VERSION}_linux_amd64.tar.gz \
+KCP_VERSION=0.33.6 \
+  && curl -fsSLO "https://github.com/kcp-dev/kcp/releases/download/v${KCP_VERSION}/kcp_${KCP_VERSION}_linux_amd64.tar.gz" \
   && mkdir -p /training/kcp_${KCP_VERSION}_linux_amd64 \
   && tar zxvf /training/kcp_${KCP_VERSION}_linux_amd64.tar.gz -C /training/kcp_${KCP_VERSION}_linux_amd64 \
   && cp /training/kcp_${KCP_VERSION}_linux_amd64/bin/kcp /usr/local/bin/ \
@@ -20,24 +20,6 @@ KCP_VERSION=0.31.1 \
 
 # verify
 kcp --version
-```
-
-## Install krew
-
-```bash
-# install krew
-KREW_VERSION=0.5.0 \
-  && curl -fsSLO https://github.com/kubernetes-sigs/krew/releases/download/v${KREW_VERSION}/krew-linux_amd64.tar.gz \
-  && mkdir -p /training/krew-linux_amd64 \
-  && tar zxvf /training/krew-linux_amd64.tar.gz -C /training/krew-linux_amd64 \
-  && /training/krew-linux_amd64/krew-linux_amd64 install krew \
-  && echo "export PATH=/root/.krew/bin:${PATH}" | tee -a /root/.trainingrc \
-  && echo "export KREW_VERSION=${KREW_VERSION}" | tee -a /root/.trainingrc
-
-# verify
-source /root/.trainingrc
-echo $PATH | grep /root/.krew/bin
-kubectl krew list
 ```
 
 ## Install krew plugins

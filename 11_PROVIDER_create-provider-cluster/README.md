@@ -8,10 +8,14 @@ In this lab you will set up the provider cluster, which will provide services.
 ```bash
 # create the cluster
 make -C /training/11_PROVIDER_create-provider-cluster create-cluster
+```
 
+```bash
 # verify your kubeconfig
 kubectx
+```
 
+```bash
 # verify provider cluster is working
 kubectl get nodes
 ```

@@ -18,12 +18,6 @@ KDP supports you in the kubeconfig madness. Therefore we have to adapt a few thi
 ```bash
 # install the oidc-login krew plugin
 kubectl krew install oidc-login
-
-# add a redirect URI to dex; this is needed only due to the training platform
-yq e ".config.staticClients[0].RedirectURIs += \"https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/12_ADMIN_setup-kcp/helm/values_dex.yaml
-
-# release the changes in dex
-helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector id=dex
 ```
 
 ## Login into Kubermatic Helm Chart Repo
@@ -33,12 +27,16 @@ helmfile sync --file /training/12_ADMIN_setup-kcp/helm/helmfile.yaml --selector 
 KUBERMATIC_REGISTRY_USERNAME=<FILL-IN-USERNAME>
 echo "export KUBERMATIC_REGISTRY_USERNAME=$KUBERMATIC_REGISTRY_USERNAME" >> /root/.trainingrc
 source /root/.trainingrc
+```
 
+```bash
 # set <KUBERMATIC_REGISTRY_PASSWORD>
 KUBERMATIC_REGISTRY_PASSWORD=<FILL-IN-PASSWORD>
 echo "export KUBERMATIC_REGISTRY_PASSWORD=$KUBERMATIC_REGISTRY_PASSWORD" >> /root/.trainingrc
 source /root/.trainingrc
+```
 
+```bash
 # login into kubermatic repo
 helm registry login quay.io -u $KUBERMATIC_REGISTRY_USERNAME -p $KUBERMATIC_REGISTRY_PASSWORD
 ```
@@ -48,13 +46,17 @@ helm registry login quay.io -u $KUBERMATIC_REGISTRY_USERNAME -p $KUBERMATIC_REGI
 ```bash
 # set <DOMAIN>
 sed -i "s/<DOMAIN>/$PLATFORM_DOMAIN/g" /training/50_ADMIN_setup-kdp/helm/values_developer-platform.yaml
+```
 
+```bash
 # set <PULL_CREDENTIALS>
 PULL_CREDENTIALS=<FILL-IN-PULL-CREDENTIALS>
 echo "export PULL_CREDENTIALS=$PULL_CREDENTIALS" >> /root/.trainingrc
 source /root/.trainingrc
 sed -i "s/<PULL_CREDENTIALS>/$PULL_CREDENTIALS/g" /training/50_ADMIN_setup-kdp/helm/values_developer-platform.yaml
+```
 
+```bash
 # release the developer-platform helm chart
 helmfile sync --file /training/50_ADMIN_setup-kdp/helm/helmfile.yaml --selector id=developer-platform
 
@@ -79,10 +81,14 @@ SESSION_ENCRYPTION_KEY=$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -
 echo "export SESSION_ENCRYPTION_KEY=$SESSION_ENCRYPTION_KEY" >> /root/.trainingrc
 source /root/.trainingrc
 yq ".dashboard.config.authentication.encryptionKey = \"$SESSION_ENCRYPTION_KEY\"" -i /training/50_ADMIN_setup-kdp/helm/values_developer-platform-dashboard.yaml
+```
 
+```bash
 # release the developer-platform-dashboard helm chart
 helmfile sync --file /training/50_ADMIN_setup-kdp/helm/helmfile.yaml --selector id=developer-platform-dashboard
+```
 
+```bash
 # verify all pods are running
 kubectl -n kcp-system get pods
 ```
@@ -92,7 +98,9 @@ kubectl -n kcp-system get pods
 ```bash
 # visit the following url in your browser
 echo https://dashboard.$PLATFORM_DOMAIN
+```
 
+```bash
 # login via user `admin` and the password you created earlier on setting up kcp
 echo $PASSWORD
 ```

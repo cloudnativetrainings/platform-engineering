@@ -16,8 +16,10 @@ Do the following steps in the KDP Dashboard:
 
 ```bash
 # due to the training environment you have to add a parameter to the file `/training/.secrets/kubeconfig-kdp-root.yaml`
-yq e ".users[0].user.exec.args += \"--oidc-redirect-url=https://$CODESPACE_NAME-8000.app.github.dev\"" -i /training/.secrets/kubeconfig-kdp-root.yaml
+yq e '.users[0].user.exec.args += "--listen-address=0.0.0.0:8000"' -i /training/.secrets/kubeconfig-kdp-root.yaml
+```
 
+```bash
 # make use of the oidc-redirect mechanisms to grant access
 # note due to the training environment it gets extra complicated, you may have to click the url twice
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
@@ -40,18 +42,24 @@ KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree
 ```bash
 # switch to the provider cluster
 kubectx admin@k8s-provider
+```
 
+```bash
 # create the CRD (if you deleted it in the kcp labs)
 kubectl apply -f /training/60_PROVIDER_provide-a-service/myservice_crd.yaml
 
 # verify
 kubectl get crd myservices.myorg.com
+```
 
+```bash
 # create the secret holding the kubeconfig to be used by the syncagent
 kubectl create secret generic kubeconfig-kcp-provider \
   --namespace default \
   --from-file kubeconfig=/training/.secrets/kubeconfig-kdp-provider.yaml
+```
 
+```bash
 # allow the syncagent to list objects of myservice
 kubectl create clusterrole myservice-syncagent \
   --verb='*' \
@@ -66,31 +74,49 @@ kubectl auth can-i watch MyService --as=system:serviceaccount:default:myservice-
 
 # verify permissions of syncagent in kcp workspace :root:provider
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl auth can-i get logicalclusters/cluster
+```
 
+```bash
 # get the name of the apiexport, the syncagent configuration has to match the name of the apiexport; you can find the configuration in the file named `/training/60_PROVIDER_provide-a-service/myservice_syncagent-helmfile.yaml`
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl get apiexport
+```
 
+```bash
 # release the syncagent helm chart
 helmfile sync -f /training/60_PROVIDER_provide-a-service/myservice_syncagent-helmfile.yaml --selector id=myservice-syncagent
+```
 
+```bash
 # verify pods are running
 kubectl get pods
+```
 
+```bash
 # logs of syncagent
 kubectl logs -f -l app.kubernetes.io/instance=myservice-syncagent
+```
 
+```bash
 # publish resource
 kubectl apply -f /training/60_PROVIDER_provide-a-service/myservice_published-resource.yaml
+```
 
+```bash
 # verify the api-resource named `myservice` exists on the provider workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl api-resources
+```
 
+```bash
 # verify the apiresourceschema got created on the provider workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl get apiresourceschema
+```
 
+```bash
 # verify the apiexport got created on the provider workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-provider.yaml kubectl get apiexport
+```
 
+```bash
 # add a label on the apiresourceschema
 # note this is a known issue which will be fixed soon
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws tree

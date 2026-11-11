@@ -91,7 +91,7 @@ A visual reference for lab `04_sharing-apis` lives at `.99_todos/lab04/kcp-shari
 
 The two syncagent helmfiles are intentionally on different chart versions today:
 
-- `21_provide-a-service/myservice_syncagent-helmfile.yaml:11` — chart `kcp/api-syncagent` at **`0.6.0`** with the ≥0.5 field `apiExportEndpointSliceName: myapiexport`.
+- `21_provide-a-service/myservice_syncagent-helmfile.yaml:11` — chart `kcp/api-syncagent` at **`0.6.2`** (app v0.7.0) with the ≥0.5 field `apiExportEndpointSliceName: myapiexport`.
 - `60_provide-a-service/myservice_syncagent-helmfile.yaml:11` — chart `kcp/api-syncagent` at **`0.3.1`** with the ≤0.4 field `apiExportName: myorg.com`.
 
 Lab `60` (KDP-driven) was held back because the KDP servlet kubeconfig downloaded from the dashboard did not grant `apiexportendpointslices` permissions that the ≥0.5 chart requires. Re-confirm KDP's current behaviour before bumping lab `60` in lockstep with lab `21`.

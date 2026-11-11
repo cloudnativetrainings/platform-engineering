@@ -14,7 +14,9 @@ kubectx root@kcp
 
 # switch to the workspace of the provider
 kubectl ws :root:provider
+```
 
+```bash
 # give the provider admin rights in his workspace
 kubectl create clusterrolebinding provider:admin \
   --clusterrole=cluster-admin \

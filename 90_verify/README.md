@@ -12,10 +12,14 @@ The user of the UI (e.g., a dev needing some infra) created some infra instance.
 ```bash
 # switch to the provider cluster
 kubectx admin@k8s-provider
+```
 
+```bash
 # verify that the instances got synced into the provider cluster
 kubectl get myservices.myorg.com -A
+```
 
+```bash
 # verify that the instance contains the message you have chosen previously
 kubectl get myservices.myorg.com -A -o yaml
 ```
@@ -27,13 +31,19 @@ kubectl get myservices.myorg.com -A -o yaml
 ```bash
 # switch to the consumer workspace via admin
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl ws :root:consumer
+```
 
+```bash
 # verify myservice is contained in the api-resources
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl api-resources | grep myservices
+```
 
+```bash
 # verify there is a binding to the apiexport provided by the :root:provider workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get apibinding myorg.com
+```
 
+```bash
 # verify the instance you created via UI exists in the consumer workspace
 KUBECONFIG=/training/.secrets/kubeconfig-kdp-root.yaml kubectl get myservice
 ```
